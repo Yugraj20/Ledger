@@ -423,6 +423,50 @@
 
 <div class="toast" id="toast"></div>
 
+<!-- SYNC FAB -->
+<button class="sync-fab" id="sync-fab" onclick="manualSync()" title="Sync now">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+    <path d="M3.51 9a9 9 0 0114.36-3.36L23 10M1 14l5.13 4.36A9 9 0 0018.49 15"/>
+  </svg>
+  <span>Sync</span>
+</button>
+
+<style>
+.sync-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 150;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 20px;
+  background: var(--surface);
+  border: 1px solid rgba(240,192,96,0.35);
+  border-radius: 50px;
+  color: var(--gold);
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.45);
+  transition: all 0.2s ease;
+  letter-spacing: 0.3px;
+}
+.sync-fab:hover {
+  background: rgba(240,192,96,0.12);
+  border-color: rgba(240,192,96,0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(240,192,96,0.2);
+}
+.sync-fab:active { transform: translateY(0); }
+.sync-fab svg { width: 15px; height: 15px; flex-shrink: 0; }
+.sync-fab.spinning svg { animation: spin-fab 0.8s linear infinite; }
+@keyframes spin-fab { to { transform: rotate(360deg); } }
+@media print { .sync-fab { display: none !important; } }
+</style>
+
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
 // ════════════════════════════════════════
@@ -475,7 +519,7 @@ function tryAutoLogin() {
   // Show the app immediately with cached profile + local data
   applyProfile(saved);
   document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
+  document.getElementById('app').style.display = 'block'; showFab();
   data = JSON.parse(localStorage.getItem('ledger') || '[]');
   renderAll();
   setSyncStatus('synced', 'Loaded');
@@ -512,7 +556,7 @@ function signIn() {
     // Local-only mode — no Client ID set yet
     document.getElementById('config-banner').style.display = 'flex';
     document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
+    document.getElementById('app').style.display = 'block'; showFab();
     document.getElementById('user-name').textContent = 'Local mode';
     data = JSON.parse(localStorage.getItem('ledger') || '[]');
     renderAll();
@@ -528,7 +572,7 @@ function signIn() {
       accessToken = resp.access_token;
       await loadUserProfile();
       document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('app').style.display = 'block';
+      document.getElementById('app').style.display = 'block'; showFab();
       setSyncStatus('syncing', 'Loading…');
       await loadFromDrive();
       renderAll();
@@ -567,10 +611,18 @@ function signOut(e) {
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('user-dropdown').classList.remove('open');
 }
+function showFab() {
+  const fab = document.getElementById('sync-fab');
+  if (fab) fab.style.display = 'inline-flex';
+}
 function manualSync(e) {
   e && e.stopPropagation();
   document.getElementById('user-dropdown').classList.remove('open');
-  syncToDrive();
+  const fab = document.getElementById('sync-fab');
+  if (fab) fab.classList.add('spinning');
+  syncToDrive().finally(() => {
+    if (fab) fab.classList.remove('spinning');
+  });
 }
 document.addEventListener('click', e => {
   const chip = document.getElementById('user-chip');

@@ -271,4 +271,578 @@
       <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
       Continue with Google
     </button>
-    <div class="login-note">Ledger only requests access to files it creates
+    <div class="login-note">Ledger only requests access to files it creates.<br>Your other Drive files remain private.</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div class="app" id="app">
+  <div id="config-banner">
+    ⚙️ <strong>Setup needed:</strong> Replace <code>YOUR_GOOGLE_CLIENT_ID</code> in index.html with your OAuth Client ID.
+    <a onclick="showSetupGuide()">View setup guide →</a>
+  </div>
+
+  <!-- Print header -->
+  <div class="print-header">
+    <div class="brand">Led<span>ger</span></div>
+    <div class="print-period" id="print-period"></div>
+  </div>
+
+  <nav>
+    <div class="nav-left">
+      <div class="brand">Led<span>ger</span></div>
+      <div class="sync-indicator" id="sync-indicator">
+        <div class="sync-dot"></div>
+        <span id="sync-label">Ready</span>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-expense" onclick="openModal('expense')"><span>−</span> New Expense</button>
+      <button class="btn btn-income"  onclick="openModal('income')"><span>+</span> New Income</button>
+      <button class="btn btn-date"    onclick="openDateModal()">📅 View by Date</button>
+      <button class="btn btn-pdf"     onclick="printMonthPDF()">🖨️ Print PDF</button>
+      <button class="btn btn-save"    onclick="saveToCSV()">💾 CSV</button>
+      <div class="user-chip" id="user-chip" onclick="toggleDropdown()">
+        <img class="user-avatar" id="user-avatar" src="" alt="" style="display:none" onerror="this.style.display='none';document.getElementById('uaf').style.display='flex'" />
+        <div class="user-avatar-fallback" id="uaf" style="display:none"></div>
+        <span class="user-name" id="user-name">Account</span>
+        <div class="user-dropdown" id="user-dropdown">
+          <button class="dropdown-item" onclick="manualSync(event)">🔄 Sync now</button>
+          <button class="dropdown-item danger" onclick="signOut(event)">↩ Sign out</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="summary-card card-balance">
+      <div class="summary-label">Net Balance</div>
+      <div class="summary-amount" id="balance">₹0</div>
+      <div class="summary-sub">This month</div>
+    </div>
+    <div class="summary-card card-income-sum">
+      <div class="summary-label">Total Income</div>
+      <div class="summary-amount" id="total-income">₹0</div>
+      <div class="progress-wrap">
+        <div class="progress-label"><span id="income-count">0 entries</span></div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill fill-income" id="income-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="summary-card card-expense-sum">
+      <div class="summary-label">Total Expenses</div>
+      <div class="summary-amount" id="total-expense">₹0</div>
+      <div class="progress-wrap">
+        <div class="progress-label"><span id="expense-count">0 entries</span></div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill fill-expense" id="expense-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="month-header">
+    <div class="month-title" id="month-display"></div>
+    <div class="month-controls">
+      <button class="month-nav-btn" onclick="changeMonth(-1)">‹</button>
+      <button class="month-nav-btn" onclick="changeMonth(1)">›</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('all',this)">All</button>
+    <button class="tab" onclick="switchTab('income',this)">Income</button>
+    <button class="tab" onclick="switchTab('expense',this)">Expenses</button>
+  </div>
+
+  <div class="txn-list" id="txn-list"></div>
+  <div class="print-footer" id="print-footer"></div>
+</div>
+
+<!-- ADD MODAL -->
+<div class="overlay" id="add-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">New Expense</div>
+      <button class="modal-close" onclick="closeModal('add-modal')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="txn-type" value="expense" />
+      <div class="form-group"><label class="form-label">Description</label><input class="form-input" id="txn-name" placeholder="e.g. Dinner, Salary, Rent…" autocomplete="off" /></div>
+      <div class="form-group"><label class="form-label">Amount (₹)</label><input class="form-input" id="txn-amount" type="number" placeholder="0.00" min="0" step="0.01" /></div>
+      <div class="form-group"><label class="form-label">Category</label><select class="form-input" id="txn-category"><option value="">Select category</option></select></div>
+      <div class="form-group"><label class="form-label">Date</label><input class="form-input" id="txn-date" type="date" /></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('add-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTransaction()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- DATE MODAL -->
+<div class="overlay" id="date-modal">
+  <div class="modal date-modal">
+    <div class="modal-header">
+      <div class="modal-title">View by Date</div>
+      <button class="modal-close" onclick="closeModal('date-modal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Select Date</label><input class="form-input" id="view-date" type="date" oninput="renderDateView()" /></div>
+      <div class="tabs" style="width:100%;margin-bottom:16px;">
+        <button class="tab active" id="dtab-income"  onclick="switchDateTab('income')">Income <span class="badge badge-income" id="di-count">0</span></button>
+        <button class="tab"        id="dtab-expense" onclick="switchDateTab('expense')">Expenses <span class="badge badge-expense" id="de-count">0</span></button>
+      </div>
+      <div class="txn-list" id="date-txn-list" style="max-height:320px;overflow-y:auto;"></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('date-modal')">Close</button></div>
+  </div>
+</div>
+
+<!-- SETUP GUIDE MODAL -->
+<div class="overlay" id="setup-modal">
+  <div class="modal" style="max-width:580px;">
+    <div class="modal-header">
+      <div class="modal-title" style="color:var(--gold)">⚙️ Google OAuth Setup Guide</div>
+      <button class="modal-close" onclick="closeModal('setup-modal')">×</button>
+    </div>
+    <div class="modal-body" style="font-size:13px;line-height:1.9;color:var(--muted);">
+      <ol style="padding-left:20px;display:flex;flex-direction:column;gap:10px;">
+        <li>Go to <strong style="color:var(--text)">console.cloud.google.com</strong> → Create a new project (e.g. "Ledger")</li>
+        <li>Go to <strong style="color:var(--text)">APIs & Services → Library</strong> → Search for <strong style="color:var(--text)">Google Drive API</strong> → Enable it</li>
+        <li>Go to <strong style="color:var(--text)">APIs & Services → OAuth consent screen</strong> → External → Fill in app name → Add your Gmail as a test user</li>
+        <li>Go to <strong style="color:var(--text)">APIs & Services → Credentials</strong> → Create Credentials → OAuth 2.0 Client ID → Web application</li>
+        <li>Under <strong style="color:var(--text)">Authorized JavaScript origins</strong>, add:<br>
+          <code style="background:var(--surface2);padding:3px 8px;border-radius:6px;font-size:12px;display:inline-block;margin-top:4px">https://YOUR_USERNAME.github.io</code>
+        </li>
+        <li>Copy the <strong style="color:var(--text)">Client ID</strong> (looks like: <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:11px">xxxxxxxxxx.apps.googleusercontent.com</code>)</li>
+        <li>Open <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:12px">index.html</code> → find <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:12px">YOUR_GOOGLE_CLIENT_ID</code> → replace with your Client ID</li>
+        <li>Push to GitHub → enable GitHub Pages → done! ✅</li>
+      </ol>
+    </div>
+    <div class="modal-footer"><button class="btn btn-primary" onclick="closeModal('setup-modal')">Got it</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+// ════════════════════════════════════════
+// ⚙️  REPLACE THIS WITH YOUR CLIENT ID
+// ════════════════════════════════════════
+const GOOGLE_CLIENT_ID = '944932101917-1ub21i9eu9h92k3sloonbif75hrfc2u7.apps.googleusercontent.com';
+
+const DRIVE_FILE_NAME = 'ledger-data.json';
+const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
+
+// ── App state ──
+const EXPENSE_CATS = ['🍔 Food & Dining','🛒 Groceries','🚗 Transport','🏠 Rent & Housing','💊 Health','🎬 Entertainment','👗 Shopping','📚 Education','💡 Utilities','📦 Other'];
+const INCOME_CATS  = ['💼 Salary','💰 Freelance','📈 Investments','🎁 Gift','🏦 Business','💵 Other Income'];
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+let data = [], currentTab = 'all', dateTab = 'income';
+let viewDate = new Date().toISOString().slice(0,10);
+const now = new Date();
+let viewMonth = now.getMonth(), viewYear = now.getFullYear();
+
+// ── Drive state ──
+let accessToken = null, driveFileId = null, syncTimer = null;
+
+// ── Persistent session helpers ──
+const SESSION_KEY = 'ledger_user';
+
+function saveSession(profile) {
+  localStorage.setItem(SESSION_KEY, JSON.stringify(profile));
+}
+function loadSession() {
+  try { return JSON.parse(localStorage.getItem(SESSION_KEY)); } catch(e) { return null; }
+}
+function clearSession() {
+  localStorage.removeItem(SESSION_KEY);
+}
+
+// ════════════════════════════════════════
+// AUTH
+// ════════════════════════════════════════
+
+// Called on every page load — restores session from localStorage instantly.
+// Google's GSI implicit flow cannot silently refresh tokens without user
+// interaction, so we load local data right away and stay ready for manual sync.
+function tryAutoLogin() {
+  if (GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID') return;
+
+  const saved = loadSession();
+  if (!saved) return;
+
+  // Show the app immediately with cached profile + local data
+  applyProfile(saved);
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  data = JSON.parse(localStorage.getItem('ledger') || '[]');
+  renderAll();
+  setSyncStatus('synced', 'Loaded');
+
+  // Try a silent token refresh (prompt:'none'). This works when the user still
+  // has an active Google session and has previously granted consent.
+  // If it fails for any reason the callback fires immediately with an error,
+  // so the app never gets stuck — it just stays in local-data mode.
+  try {
+    google.accounts.oauth2.initTokenClient({
+      client_id: GOOGLE_CLIENT_ID,
+      scope: DRIVE_SCOPE + ' https://www.googleapis.com/auth/userinfo.profile',
+      prompt: 'none',
+      error_callback: () => { setSyncStatus('synced', 'Local only'); },
+      callback: async (resp) => {
+        if (!resp || resp.error || !resp.access_token) {
+          setSyncStatus('synced', 'Local only');
+          return;
+        }
+        accessToken = resp.access_token;
+        setSyncStatus('syncing', 'Syncing…');
+        await loadFromDrive();
+        renderAll();
+        setSyncStatus('synced', 'Synced');
+      }
+    }).requestAccessToken({ prompt: 'none' });
+  } catch(e) {
+    setSyncStatus('synced', 'Local only');
+  }
+}
+
+function signIn() {
+  if (GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID') {
+    // Local-only mode — no Client ID set yet
+    document.getElementById('config-banner').style.display = 'flex';
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    document.getElementById('user-name').textContent = 'Local mode';
+    data = JSON.parse(localStorage.getItem('ledger') || '[]');
+    renderAll();
+    showToast('⚠️ Running locally — set up OAuth to sync to Drive');
+    return;
+  }
+
+  google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope: DRIVE_SCOPE + ' https://www.googleapis.com/auth/userinfo.profile',
+    callback: async (resp) => {
+      if (resp.error) { showToast('❌ Sign-in failed'); return; }
+      accessToken = resp.access_token;
+      await loadUserProfile();
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      setSyncStatus('syncing', 'Loading…');
+      await loadFromDrive();
+      renderAll();
+    }
+  }).requestAccessToken();
+}
+
+function applyProfile(p) {
+  document.getElementById('user-name').textContent = p.given_name || p.name || 'Account';
+  const img = document.getElementById('user-avatar');
+  const fb  = document.getElementById('uaf');
+  if (p.picture) { img.src = p.picture; img.style.display = 'block'; fb.style.display = 'none'; }
+  else { fb.textContent = (p.name||'U')[0].toUpperCase(); fb.style.display = 'flex'; img.style.display = 'none'; }
+}
+
+async function loadUserProfile() {
+  try {
+    const r = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+      headers: { Authorization: 'Bearer ' + accessToken }
+    });
+    const p = await r.json();
+    applyProfile(p);
+    saveSession(p); // persist so next visit auto-logs in
+  } catch(e) {}
+}
+
+function toggleDropdown() {
+  document.getElementById('user-dropdown').classList.toggle('open');
+}
+function signOut(e) {
+  e && e.stopPropagation();
+  if (accessToken) google.accounts.oauth2.revoke(accessToken, ()=>{});
+  accessToken = null; driveFileId = null; data = [];
+  clearSession(); // remove persisted session so login screen shows next time
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('user-dropdown').classList.remove('open');
+}
+function manualSync(e) {
+  e && e.stopPropagation();
+  document.getElementById('user-dropdown').classList.remove('open');
+  syncToDrive();
+}
+document.addEventListener('click', e => {
+  const chip = document.getElementById('user-chip');
+  if (chip && !chip.contains(e.target)) document.getElementById('user-dropdown').classList.remove('open');
+});
+
+// ════════════════════════════════════════
+// GOOGLE DRIVE
+// ════════════════════════════════════════
+async function driveReq(url, opts = {}) {
+  const r = await fetch(url, { ...opts, headers: { Authorization: 'Bearer ' + accessToken, ...opts.headers } });
+  if (!r.ok) throw new Error('Drive ' + r.status);
+  return r;
+}
+
+async function findOrCreate() {
+  const s = await driveReq(`https://www.googleapis.com/drive/v3/files?q=name='${DRIVE_FILE_NAME}'+and+trashed=false&fields=files(id)&spaces=drive`);
+  const j = await s.json();
+  if (j.files && j.files.length) { driveFileId = j.files[0].id; return; }
+
+  // Create new file
+  const boundary = 'ldr';
+  const meta = JSON.stringify({ name: DRIVE_FILE_NAME, mimeType: 'application/json' });
+  const body = '--' + boundary + '\r\nContent-Type: application/json\r\n\r\n' + meta + '\r\n'
+             + '--' + boundary + '\r\nContent-Type: application/json\r\n\r\n[]\r\n'
+             + '--' + boundary + '--';
+  const c = await driveReq('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id', {
+    method: 'POST', headers: { 'Content-Type': 'multipart/related; boundary=' + boundary }, body
+  });
+  driveFileId = (await c.json()).id;
+}
+
+async function loadFromDrive() {
+  try {
+    await findOrCreate();
+    const r = await driveReq(`https://www.googleapis.com/drive/v3/files/${driveFileId}?alt=media`);
+    const t = await r.text();
+    data = t ? JSON.parse(t) : [];
+    setSyncStatus('synced', 'Synced');
+  } catch(e) {
+    console.error(e);
+    data = JSON.parse(localStorage.getItem('ledger') || '[]');
+    setSyncStatus('error', 'Offline');
+    showToast('⚠️ Could not load from Drive — using local cache');
+  }
+}
+
+async function syncToDrive() {
+  if (!accessToken || !driveFileId) {
+    localStorage.setItem('ledger', JSON.stringify(data));
+    return;
+  }
+  setSyncStatus('syncing', 'Saving…');
+  try {
+    await driveReq(`https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    localStorage.setItem('ledger', JSON.stringify(data));
+    setSyncStatus('synced', 'Saved ✓');
+    setTimeout(() => setSyncStatus('synced', 'Synced'), 2000);
+  } catch(e) {
+    console.error(e);
+    localStorage.setItem('ledger', JSON.stringify(data));
+    setSyncStatus('error', 'Sync failed');
+    showToast('⚠️ Sync failed — saved locally');
+  }
+}
+
+// Debounced save: instant localStorage + Drive sync after 1.5s idle
+function save() {
+  localStorage.setItem('ledger', JSON.stringify(data));
+  setSyncStatus('syncing', 'Saving…');
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(syncToDrive, 1500);
+}
+
+function setSyncStatus(state, label) {
+  const el = document.getElementById('sync-indicator');
+  el.className = 'sync-indicator ' + state;
+  document.getElementById('sync-label').textContent = label;
+}
+
+// ════════════════════════════════════════
+// APP LOGIC
+// ════════════════════════════════════════
+function fmt(n) { return '₹' + Math.abs(n).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+function openModal(type) {
+  const cs = document.getElementById('txn-category');
+  cs.innerHTML = '<option value="">Select category</option>';
+  (type === 'expense' ? EXPENSE_CATS : INCOME_CATS).forEach(c => {
+    const o = document.createElement('option'); o.value = c; o.textContent = c; cs.appendChild(o);
+  });
+  document.getElementById('txn-type').value = type;
+  document.getElementById('modal-title').textContent = type === 'expense' ? 'New Expense' : 'New Income';
+  document.getElementById('modal-title').style.color = type === 'expense' ? 'var(--red)' : 'var(--teal)';
+  document.getElementById('txn-name').value = '';
+  document.getElementById('txn-amount').value = '';
+  document.getElementById('txn-date').value = new Date().toISOString().slice(0,10);
+  document.getElementById('add-modal').classList.add('open');
+  setTimeout(() => document.getElementById('txn-name').focus(), 200);
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function openDateModal() {
+  document.getElementById('view-date').value = new Date().toISOString().slice(0,10);
+  document.getElementById('date-modal').classList.add('open');
+  renderDateView();
+}
+
+function saveTransaction() {
+  const name = document.getElementById('txn-name').value.trim();
+  const amount = parseFloat(document.getElementById('txn-amount').value);
+  const type = document.getElementById('txn-type').value;
+  const cat  = document.getElementById('txn-category').value;
+  const date = document.getElementById('txn-date').value;
+  if (!name)           { shake('txn-name');   return; }
+  if (!amount||amount<=0) { shake('txn-amount'); return; }
+  if (!date)           { shake('txn-date');   return; }
+  data.push({ id: Date.now(), name, amount, type, cat: cat||'📦 Other', date });
+  save(); closeModal('add-modal'); renderAll();
+  showToast(type==='expense' ? '🔴 Expense added' : '🟢 Income added');
+}
+
+function deleteTransaction(id) {
+  data = data.filter(t => t.id !== id);
+  save(); renderAll();
+  if (document.getElementById('date-modal').classList.contains('open')) renderDateView();
+}
+
+function getMonthData() {
+  return data.filter(t => { const d = new Date(t.date); return d.getMonth()===viewMonth && d.getFullYear()===viewYear; });
+}
+
+function renderAll() {
+  const md = getMonthData();
+  const income  = md.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const expense = md.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const balance = income - expense;
+  const max = Math.max(income, expense) || 1;
+  document.getElementById('balance').textContent       = (balance<0?'−':'') + fmt(balance);
+  document.getElementById('total-income').textContent  = fmt(income);
+  document.getElementById('total-expense').textContent = fmt(expense);
+  document.getElementById('income-count').textContent  = md.filter(t=>t.type==='income').length + ' entries';
+  document.getElementById('expense-count').textContent = md.filter(t=>t.type==='expense').length + ' entries';
+  document.getElementById('income-bar').style.width    = (income/max*100)+'%';
+  document.getElementById('expense-bar').style.width   = (expense/max*100)+'%';
+  document.getElementById('month-display').textContent = MONTHS[viewMonth]+' '+viewYear;
+  let filtered = [...md].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if (currentTab !== 'all') filtered = filtered.filter(t=>t.type===currentTab);
+  const list = document.getElementById('txn-list');
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty-state"><div class="big">${currentTab==='expense'?'🚫':currentTab==='income'?'💸':'📭'}</div><div>No ${currentTab==='all'?'transactions':currentTab} this month</div></div>`;
+    return;
+  }
+  list.innerHTML = filtered.map(txnHTML).join('');
+}
+
+function txnHTML(t) {
+  const isExp = t.type==='expense';
+  const dStr  = new Date(t.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+  return `<div class="txn-item">
+    <div class="txn-icon ${isExp?'icon-expense':'icon-income'}">${t.cat.split(' ')[0]}</div>
+    <div class="txn-info">
+      <div class="txn-name">${escHtml(t.name)}</div>
+      <div class="txn-meta">${t.cat.split(' ').slice(1).join(' ')} · ${dStr}</div>
+    </div>
+    <div class="txn-amount ${isExp?'amount-expense':'amount-income'}">${isExp?'−':'+'}${fmt(t.amount)}</div>
+    <button class="txn-del" onclick="deleteTransaction(${t.id})" title="Delete">×</button>
+  </div>`;
+}
+
+function switchTab(tab,el) {
+  currentTab = tab;
+  document.querySelectorAll('.tabs:not(.date-modal .tabs) .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active'); renderAll();
+}
+
+function changeMonth(dir) {
+  viewMonth += dir;
+  if (viewMonth>11){viewMonth=0;viewYear++;}
+  if (viewMonth<0){viewMonth=11;viewYear--;}
+  renderAll();
+}
+
+function renderDateView() {
+  const sel = document.getElementById('view-date').value;
+  if (!sel) return;
+  viewDate = sel;
+  const forDate  = data.filter(t=>t.date===sel);
+  const incomes  = forDate.filter(t=>t.type==='income');
+  const expenses = forDate.filter(t=>t.type==='expense');
+  document.getElementById('di-count').textContent = incomes.length;
+  document.getElementById('de-count').textContent = expenses.length;
+  const items = dateTab==='income' ? incomes : expenses;
+  const list  = document.getElementById('date-txn-list');
+  if (!items.length) {
+    const d = new Date(sel).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+    list.innerHTML = `<div class="empty-state"><div class="big">${dateTab==='income'?'💰':'🧾'}</div><div>No ${dateTab} on ${d}</div></div>`;
+    return;
+  }
+  list.innerHTML = items.map(txnHTML).join('');
+}
+
+function switchDateTab(tab) {
+  dateTab = tab;
+  document.getElementById('dtab-income').classList.toggle('active', tab==='income');
+  document.getElementById('dtab-expense').classList.toggle('active', tab==='expense');
+  renderDateView();
+}
+
+function shake(id) {
+  const el = document.getElementById(id);
+  el.style.borderColor = 'var(--red)';
+  el.animate([{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(-4px)'},{transform:'translateX(0)'}],{duration:300});
+  setTimeout(()=>el.style.borderColor='',1000);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+function escHtml(s) {
+  return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function saveToCSV() {
+  if (!data.length) { showToast('⚠️ No data to export'); return; }
+  const sorted = [...data].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const header = ['Date','Type','Description','Category','Amount (₹)'];
+  const rows = sorted.map(t=>[t.date,t.type.charAt(0).toUpperCase()+t.type.slice(1),'"'+t.name.replace(/"/g,'""')+'"','"'+t.cat.replace(/"/g,'""')+'"',t.amount.toFixed(2)]);
+  const csv = [header,...rows].map(r=>r.join(',')).join('\n');
+  const a = Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:`ledger-${MONTHS[viewMonth]}-${viewYear}.csv`});
+  a.click(); showToast('✅ Exported as CSV');
+}
+
+function printMonthPDF() {
+  const md = getMonthData();
+  const income  = md.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const expense = md.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  document.getElementById('print-period').textContent = 'Monthly Report · '+MONTHS[viewMonth]+' '+viewYear;
+  document.getElementById('print-footer').textContent =
+    'Generated '+new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})+
+    ' · '+md.length+' transactions · Income '+fmt(income)+' · Expenses '+fmt(expense);
+  const saved = currentTab; currentTab='all'; renderAll();
+  window.print();
+  currentTab=saved; renderAll();
+}
+
+function showSetupGuide() { document.getElementById('setup-modal').classList.add('open'); }
+
+document.querySelectorAll('.overlay').forEach(o=>{
+  o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&document.getElementById('add-modal').classList.contains('open'))saveTransaction();
+  if(e.key==='Escape')document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open'));
+});
+
+// Auto-login: wait for Google GSI library to be ready, then attempt silent sign-in
+(function waitForGSI() {
+  if (typeof google !== 'undefined' && google.accounts && google.accounts.oauth2) {
+    tryAutoLogin();
+  } else {
+    setTimeout(waitForGSI, 100);
+  }
+})();
+</script>
+</body>
+</html>

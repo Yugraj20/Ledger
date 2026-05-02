@@ -446,9 +446,59 @@ let viewMonth = now.getMonth(), viewYear = now.getFullYear();
 // ── Drive state ──
 let accessToken = null, driveFileId = null, syncTimer = null;
 
+// ── Persistent session helpers ──
+const SESSION_KEY = 'ledger_user';
+
+function saveSession(profile) {
+  localStorage.setItem(SESSION_KEY, JSON.stringify(profile));
+}
+function loadSession() {
+  try { return JSON.parse(localStorage.getItem(SESSION_KEY)); } catch(e) { return null; }
+}
+function clearSession() {
+  localStorage.removeItem(SESSION_KEY);
+}
+
 // ════════════════════════════════════════
 // AUTH
 // ════════════════════════════════════════
+
+// Called on every page load — tries to silently restore the session
+function tryAutoLogin() {
+  if (GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID') return; // local-only mode, skip
+
+  const saved = loadSession();
+  if (!saved) return; // never logged in, show login screen normally
+
+  // Immediately show the app with cached profile so it feels instant
+  applyProfile(saved);
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  setSyncStatus('syncing', 'Reconnecting…');
+  data = JSON.parse(localStorage.getItem('ledger') || '[]');
+  renderAll();
+
+  // Silently get a fresh access token in the background
+  google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CLIENT_ID,
+    scope: DRIVE_SCOPE + ' https://www.googleapis.com/auth/userinfo.profile',
+    prompt: '',   // empty string = no prompt, silent refresh
+    callback: async (resp) => {
+      if (resp.error) {
+        // Silent refresh failed (e.g. consent revoked) — stay in offline mode
+        setSyncStatus('error', 'Offline');
+        showToast('⚠️ Could not reconnect — using local data');
+        return;
+      }
+      accessToken = resp.access_token;
+      await loadUserProfile(); // refresh name/avatar in case it changed
+      setSyncStatus('syncing', 'Loading…');
+      await loadFromDrive();
+      renderAll();
+    }
+  }).requestAccessToken();
+}
+
 function signIn() {
   if (GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID') {
     // Local-only mode — no Client ID set yet
@@ -478,17 +528,22 @@ function signIn() {
   }).requestAccessToken();
 }
 
+function applyProfile(p) {
+  document.getElementById('user-name').textContent = p.given_name || p.name || 'Account';
+  const img = document.getElementById('user-avatar');
+  const fb  = document.getElementById('uaf');
+  if (p.picture) { img.src = p.picture; img.style.display = 'block'; fb.style.display = 'none'; }
+  else { fb.textContent = (p.name||'U')[0].toUpperCase(); fb.style.display = 'flex'; img.style.display = 'none'; }
+}
+
 async function loadUserProfile() {
   try {
     const r = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
       headers: { Authorization: 'Bearer ' + accessToken }
     });
     const p = await r.json();
-    document.getElementById('user-name').textContent = p.given_name || p.name || 'Account';
-    const img = document.getElementById('user-avatar');
-    const fb  = document.getElementById('uaf');
-    if (p.picture) { img.src = p.picture; img.style.display = 'block'; }
-    else { fb.textContent = (p.name||'U')[0].toUpperCase(); fb.style.display = 'flex'; }
+    applyProfile(p);
+    saveSession(p); // persist so next visit auto-logs in
   } catch(e) {}
 }
 
@@ -499,6 +554,7 @@ function signOut(e) {
   e && e.stopPropagation();
   if (accessToken) google.accounts.oauth2.revoke(accessToken, ()=>{});
   accessToken = null; driveFileId = null; data = [];
+  clearSession(); // remove persisted session so login screen shows next time
   document.getElementById('app').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('user-dropdown').classList.remove('open');
@@ -770,6 +826,15 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&document.getElementById('add-modal').classList.contains('open'))saveTransaction();
   if(e.key==='Escape')document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open'));
 });
+
+// Auto-login: wait for Google GSI library to be ready, then attempt silent sign-in
+(function waitForGSI() {
+  if (typeof google !== 'undefined' && google.accounts && google.accounts.oauth2) {
+    tryAutoLogin();
+  } else {
+    setTimeout(waitForGSI, 100);
+  }
+})();
 </script>
 </body>
 </html>

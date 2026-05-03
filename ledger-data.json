@@ -1,13 +1,5 @@
 [
   {
-    "id": 1777743164080,
-    "name": "Car Petrol",
-    "amount": 2400,
-    "type": "expense",
-    "cat": "ÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂ Transport",
-    "date": "2026-05-01"
-  },
-  {
     "id": 1777743188865,
     "name": "Driving Track Practice",
     "amount": 500,

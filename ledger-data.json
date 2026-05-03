@@ -4,7 +4,7 @@
     "name": "Car Petrol",
     "amount": 2400,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Transport",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Transport",
     "date": "2026-05-01"
   },
   {
@@ -12,7 +12,7 @@
     "name": "Driving Track Practice",
     "amount": 500,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Transport",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Transport",
     "date": "2026-05-01"
   },
   {
@@ -20,7 +20,7 @@
     "name": "Nanan Ji Neuro Doctor",
     "amount": 1800,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Health",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Health",
     "date": "2026-05-01"
   },
   {
@@ -28,7 +28,7 @@
     "name": "Sprite 2L",
     "amount": 109,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Food & Dining",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Food & Dining",
     "date": "2026-05-01"
   },
   {
@@ -36,23 +36,15 @@
     "name": "Rent Shivani",
     "amount": 20000,
     "type": "income",
-    "cat": "Ã°ÂÂÂµ Other Income",
+    "cat": "ÃÂ°ÃÂÃÂÃÂµ Other Income",
     "date": "2026-05-01"
-  },
-  {
-    "id": 1777743323131,
-    "name": "Jamadar",
-    "amount": 150,
-    "type": "expense",
-    "cat": "Ã°ÂÂÂ¦ Other",
-    "date": "2026-05-02"
   },
   {
     "id": 1777816593616,
     "name": "Carpenter Naresh Almirah Atul",
     "amount": 1000,
     "type": "expense",
-    "cat": "🏠 Rent & Housing",
+    "cat": "ð  Rent & Housing",
     "date": "2026-05-03"
   }
 ]

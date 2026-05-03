@@ -28,73 +28,66 @@
     top: -300px; right: -300px; pointer-events: none; z-index: 0;
   }
 
-  /* ── LOGIN ── */
-  #login-screen { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 500; padding: 20px; }
-  .login-card {
+  /* ── SETUP SCREEN ── */
+  #setup-screen {
+    position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+    z-index: 500; padding: 20px; background: var(--bg);
+  }
+  .setup-card {
     background: var(--surface); border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 28px; padding: 52px 44px; max-width: 440px; width: 100%;
-    text-align: center; box-shadow: 0 20px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(242,201,106,0.08); position: relative; overflow: hidden;
+    border-radius: 28px; padding: 44px 40px; max-width: 520px; width: 100%;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(242,201,106,0.08);
+    position: relative; overflow: hidden;
   }
-  .login-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold2), var(--gold)); }
-  .login-brand { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 900; color: var(--text); margin-bottom: 6px; }
-  .login-brand span { color: var(--gold); }
-  .login-tagline { font-size: 13px; color: var(--muted); margin-bottom: 36px; line-height: 1.7; }
-  .login-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; text-align: left; }
-  .login-feature {
-    display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted);
-    background: var(--surface2); border-radius: 10px; padding: 12px 16px; border: 1px solid var(--border);
+  .setup-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold2), var(--gold)); }
+  .setup-brand { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--text); margin-bottom: 6px; }
+  .setup-brand span { color: var(--gold); }
+  .setup-tagline { font-size: 14px; color: var(--muted); margin-bottom: 32px; line-height: 1.7; }
+  .setup-fields { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+  .setup-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+  .setup-input {
+    width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 13px 15px; color: var(--text); font-family: var(--font-main); font-size: 14px;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s; -webkit-appearance: none;
   }
-  .login-feature .icon { font-size: 18px; flex-shrink: 0; }
-  .btn-google {
-    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-    width: 100%; padding: 14px 24px; background: #fff; color: #1f1f1f;
-    border: none; border-radius: 12px; font-family: var(--font-main); font-size: 15px; font-weight: 700;
-    cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  .setup-input:focus { border-color: rgba(242,201,106,0.5); box-shadow: 0 0 0 3px rgba(242,201,106,0.08); }
+  .setup-input::placeholder { color: var(--muted); }
+  .setup-hint { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+  .setup-hint a { color: var(--gold); text-decoration: none; }
+  .setup-hint a:hover { text-decoration: underline; }
+  .btn-setup {
+    width: 100%; padding: 14px; background: linear-gradient(135deg, var(--gold2), var(--gold));
+    color: #1a1200; border: none; border-radius: 12px; font-family: var(--font-main);
+    font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(240,192,96,0.3);
   }
-  .btn-google:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.4); }
-  .btn-google svg { width: 20px; height: 20px; flex-shrink: 0; }
-  .login-note { margin-top: 16px; font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .btn-setup:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(240,192,96,0.4); }
+  .setup-steps {
+    margin-bottom: 28px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .setup-step {
+    display: flex; align-items: flex-start; gap: 12px; font-size: 13px; color: var(--muted);
+    background: var(--surface2); border-radius: 10px; padding: 12px 14px; border: 1px solid var(--border);
+    line-height: 1.6;
+  }
+  .step-num {
+    width: 22px; height: 22px; border-radius: 50%; background: rgba(242,201,106,0.15);
+    color: var(--gold); font-size: 11px; font-weight: 700; display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0; margin-top: 1px;
+  }
+  code { background: rgba(255,255,255,0.07); padding: 2px 6px; border-radius: 5px; font-size: 12px; font-family: monospace; color: var(--text); }
 
   /* ── SYNC STATUS ── */
   .sync-indicator {
     display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted);
-    padding: 6px 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; transition: all 0.3s;
+    padding: 6px 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; transition: all 0.3s; cursor: default;
   }
-  .sync-indicator.syncing { color: var(--gold); border-color: rgba(240,192,96,0.3); }
-  .sync-indicator.synced  { color: var(--teal); border-color: rgba(56,217,169,0.3); }
-  .sync-indicator.error   { color: var(--red);  border-color: rgba(255,107,107,0.3); }
-  .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .sync-indicator.syncing { color: var(--gold); border-color: rgba(242,201,106,0.25); background: rgba(242,201,106,0.06); }
+  .sync-indicator.synced  { color: var(--teal); border-color: rgba(56,217,169,0.25);  background: rgba(56,217,169,0.06); }
+  .sync-indicator.error   { color: var(--red);  border-color: rgba(255,107,107,0.25); background: rgba(255,107,107,0.06); }
+  .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
   .syncing .sync-dot { animation: pulse 1s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-  /* ── USER CHIP ── */
-  .user-chip {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--surface2); border: 1px solid var(--border); border-radius: 20px;
-    padding: 5px 12px 5px 5px; cursor: pointer; transition: all 0.2s; position: relative;
-  }
-  .user-chip:hover { border-color: rgba(255,255,255,0.15); }
-  .user-avatar { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; }
-  .user-avatar-fallback {
-    width: 26px; height: 26px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold2), var(--gold));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700; color: #1a1200;
-  }
-  .user-name { font-size: 12px; font-weight: 600; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .user-dropdown {
-    position: absolute; top: calc(100% + 8px); right: 0;
-    background: var(--surface); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-    padding: 8px; min-width: 160px; box-shadow: var(--shadow); z-index: 50; display: none;
-  }
-  .user-dropdown.open { display: block; }
-  .dropdown-item {
-    display: flex; align-items: center; gap: 8px; padding: 10px 12px; font-size: 13px; color: var(--muted);
-    cursor: pointer; border-radius: 8px; transition: all 0.15s; background: none; border: none;
-    width: 100%; text-align: left; font-family: var(--font-main);
-  }
-  .dropdown-item:hover { background: var(--surface2); color: var(--text); }
-  .dropdown-item.danger:hover { color: var(--red); }
 
   /* ── CONFIG BANNER ── */
   #config-banner {
@@ -102,7 +95,6 @@
     border-radius: 12px; padding: 14px 18px; margin-bottom: 20px;
     font-size: 13px; color: var(--gold); display: none; align-items: center; gap: 10px;
   }
-  #config-banner a { color: var(--gold); text-decoration: underline; cursor: pointer; }
 
   /* ── APP ── */
   .app { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; display: none; }
@@ -132,21 +124,25 @@
   .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
   .btn-pdf { background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border); }
   .btn-pdf:hover { background: rgba(255,255,255,0.1); color: var(--text); transform: translateY(-1px); }
+  .btn-settings { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid var(--border); }
+  .btn-settings:hover { background: rgba(255,255,255,0.1); color: var(--text); transform: translateY(-1px); }
 
   /* Hero */
   .hero { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 40px; }
   .summary-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
   .summary-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
   .summary-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-  .card-balance::before   { background: linear-gradient(90deg, var(--gold), var(--gold2)); }
-  .card-balance { box-shadow: inset 0 0 60px rgba(242,201,106,0.04); }
+  .card-balance::before    { background: linear-gradient(90deg, var(--gold), var(--gold2)); }
+  .card-balance            { box-shadow: inset 0 0 60px rgba(242,201,106,0.04); }
   .card-income-sum::before { background: linear-gradient(90deg, var(--teal), #20c997); }
-  .card-expense-sum::before { background: linear-gradient(90deg, var(--red), #ff9a9a); }
+  .card-income-sum         { box-shadow: inset 0 0 60px rgba(56,217,169,0.03); }
+  .card-expense-sum::before{ background: linear-gradient(90deg, var(--red), #ff9a9a); }
+  .card-expense-sum        { box-shadow: inset 0 0 60px rgba(255,107,107,0.03); }
   .summary-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
   .summary-amount { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; line-height: 1; margin-bottom: 8px; letter-spacing: -0.5px; }
-  .card-balance .summary-amount   { color: var(--gold); }
+  .card-balance .summary-amount    { color: var(--gold); }
   .card-income-sum .summary-amount { color: var(--teal); }
-  .card-expense-sum .summary-amount { color: var(--red); }
+  .card-expense-sum .summary-amount{ color: var(--red); }
   .summary-sub { font-size: 12px; color: var(--muted); }
 
   .month-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
@@ -221,9 +217,13 @@
   .badge-income  { background: rgba(56,217,169,0.2);  color: var(--teal); }
   .badge-expense { background: rgba(255,107,107,0.2); color: var(--red); }
 
-  ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 99px; }
+  /* Last sync time */
+  .last-sync { font-size: 11px; color: var(--muted); }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
 
   @media (max-width: 720px) { .hero { grid-template-columns: 1fr; gap: 12px; } .summary-amount { font-size: 26px; } nav { padding: 18px 0 14px; } .brand { font-size: 22px; } .btn { padding: 9px 14px; font-size: 12px; } .month-title { font-size: 18px; } }
   @media (max-width: 440px) { .nav-actions { width: 100%; } .nav-actions .btn { flex: 1; justify-content: center; } .tabs { width: 100%; } .tab { flex: 1; text-align: center; } }
@@ -233,7 +233,7 @@
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     body { background: #fff !important; color: #111 !important; }
     body::before, body::after { display: none; }
-    #login-screen, nav, .tabs, .month-nav-btn, .btn-pdf, .btn-save, .btn-expense, .btn-income, .btn-date, .txn-del, .toast, .overlay, #config-banner { display: none !important; }
+    #setup-screen, nav, .tabs, .month-nav-btn, .btn-pdf, .btn-save, .btn-expense, .btn-income, .btn-date, .txn-del, .toast, .overlay, #config-banner, .sync-fab { display: none !important; }
     .app { max-width: 100%; padding: 0; display: block !important; }
     .print-header { display: flex !important; align-items: center; justify-content: space-between; border-bottom: 2px solid #e8a830; padding-bottom: 12px; margin-bottom: 22px; }
     .print-header .brand { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; color: #111; }
@@ -256,57 +256,62 @@
   }
   .print-header, .print-footer { display: none; }
 
-  /* ── BOTTOM-LEFT GLOW ── */
-  .app::before {
-    content: ''; position: fixed; width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(56,217,169,0.04) 0%, transparent 70%);
-    bottom: -200px; left: -200px; pointer-events: none; z-index: 0;
+  /* ── SYNC FAB ── */
+  .sync-fab {
+    position: fixed; bottom: 28px; right: 28px; z-index: 150;
+    display: none; align-items: center; gap: 8px; padding: 13px 20px;
+    background: var(--surface); border: 1px solid rgba(242,201,106,0.35);
+    border-radius: 50px; color: var(--gold); font-family: var(--font-main);
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.45); transition: all 0.2s ease;
   }
-
-  /* ── SUMMARY CARD INNER GLOW ── */
-  .card-income-sum { box-shadow: inset 0 0 60px rgba(56,217,169,0.03); }
-  .card-expense-sum { box-shadow: inset 0 0 60px rgba(255,107,107,0.03); }
-
-  /* ── IMPROVED SCROLLBAR ── */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-
-  /* ── SYNC INDICATOR ENHANCED ── */
-  .sync-indicator { cursor: default; }
-  .sync-indicator.synced { color: var(--teal); border-color: rgba(56,217,169,0.25); background: rgba(56,217,169,0.06); }
-  .sync-indicator.error { color: var(--red); border-color: rgba(255,107,107,0.25); background: rgba(255,107,107,0.06); }
-  .sync-indicator.syncing { color: var(--gold); border-color: rgba(242,201,106,0.25); background: rgba(242,201,106,0.06); }
+  .sync-fab:hover { background: rgba(242,201,106,0.12); border-color: rgba(242,201,106,0.6); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(242,201,106,0.2); }
+  .sync-fab:active { transform: translateY(0); }
+  .sync-fab svg { width: 15px; height: 15px; flex-shrink: 0; }
+  .sync-fab.spinning svg { animation: spin-fab 0.8s linear infinite; }
+  @keyframes spin-fab { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
-<div id="login-screen">
-  <div class="login-card">
-    <div class="login-brand">Led<span>ger</span></div>
-    <div class="login-tagline">Your personal finance tracker.<br>Sign in to sync your data across all devices.</div>
-    <div class="login-features">
-      <div class="login-feature"><span class="icon">🔒</span><span>Data stored privately in <strong>your own Google Drive</strong></span></div>
-      <div class="login-feature"><span class="icon">🌐</span><span>Access from any device, anywhere</span></div>
-      <div class="login-feature"><span class="icon">☁️</span><span>Auto-saves to Drive after every change</span></div>
+<!-- SETUP SCREEN (shown if GitHub config not set) -->
+<div id="setup-screen">
+  <div class="setup-card">
+    <div class="setup-brand">Led<span>ger</span></div>
+    <div class="setup-tagline">Your personal finance tracker — data lives in a GitHub repo.<br>No login required, ever.</div>
+
+    <div class="setup-steps">
+      <div class="setup-step"><div class="step-num">1</div><div>Create a <strong style="color:var(--text)">GitHub Personal Access Token</strong> at <a href="https://github.com/settings/tokens/new" target="_blank" style="color:var(--gold)">github.com/settings/tokens/new</a> — check the <code>repo</code> scope.</div></div>
+      <div class="setup-step"><div class="step-num">2</div><div>Create a <strong style="color:var(--text)">public or private repo</strong> on GitHub (e.g. <code>my-ledger</code>). It can be empty.</div></div>
+      <div class="setup-step"><div class="step-num">3</div><div>Fill in the fields below and click <strong style="color:var(--text)">Save & Launch</strong>. Your config is stored locally in your browser — never sent anywhere else.</div></div>
     </div>
-    <button class="btn-google" id="sign-in-btn" onclick="signIn()">
-      <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
-      Continue with Google
-    </button>
-    <div class="login-note">Ledger only requests access to files it creates.<br>Your other Drive files remain private.</div>
+
+    <div class="setup-fields">
+      <div>
+        <label class="setup-label">GitHub Personal Access Token</label>
+        <input class="setup-input" id="cfg-token" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" />
+        <div class="setup-hint">Classic token with <code>repo</code> scope. <a href="https://github.com/settings/tokens/new?scopes=repo&description=Ledger" target="_blank">Generate one →</a></div>
+      </div>
+      <div>
+        <label class="setup-label">GitHub Username</label>
+        <input class="setup-input" id="cfg-owner" type="text" placeholder="your-username" autocomplete="off" />
+      </div>
+      <div>
+        <label class="setup-label">Repository Name</label>
+        <input class="setup-input" id="cfg-repo" type="text" placeholder="my-ledger" autocomplete="off" />
+      </div>
+      <div>
+        <label class="setup-label">File path in repo</label>
+        <input class="setup-input" id="cfg-path" type="text" placeholder="ledger-data.json" autocomplete="off" />
+        <div class="setup-hint">e.g. <code>ledger-data.json</code> or <code>data/transactions.json</code></div>
+      </div>
+    </div>
+    <button class="btn-setup" onclick="saveConfig()">Save &amp; Launch →</button>
   </div>
 </div>
 
 <!-- MAIN APP -->
 <div class="app" id="app">
-  <div id="config-banner">
-    ⚙️ <strong>Setup needed:</strong> Replace <code>YOUR_GOOGLE_CLIENT_ID</code> in index.html with your OAuth Client ID.
-    <a onclick="showSetupGuide()">View setup guide →</a>
-  </div>
-
   <!-- Print header -->
   <div class="print-header">
     <div class="brand">Led<span>ger</span></div>
@@ -318,7 +323,7 @@
       <div class="brand">Led<span>ger</span></div>
       <div class="sync-indicator" id="sync-indicator">
         <div class="sync-dot"></div>
-        <span id="sync-label">Ready</span>
+        <span id="sync-label">Connecting…</span>
       </div>
     </div>
     <div class="nav-actions">
@@ -327,15 +332,7 @@
       <button class="btn btn-date"    onclick="openDateModal()">📅 View by Date</button>
       <button class="btn btn-pdf"     onclick="printMonthPDF()">🖨️ Print PDF</button>
       <button class="btn btn-save"    onclick="saveToCSV()">💾 CSV</button>
-      <div class="user-chip" id="user-chip" onclick="toggleDropdown()">
-        <img class="user-avatar" id="user-avatar" src="" alt="" style="display:none" onerror="this.style.display='none';document.getElementById('uaf').style.display='flex'" />
-        <div class="user-avatar-fallback" id="uaf" style="display:none"></div>
-        <span class="user-name" id="user-name">Account</span>
-        <div class="user-dropdown" id="user-dropdown">
-          <button class="dropdown-item" onclick="manualSync(event)">🔄 Sync now</button>
-          <button class="dropdown-item danger" onclick="signOut(event)">↩ Sign out</button>
-        </div>
-      </div>
+      <button class="btn btn-settings" onclick="resetConfig()" title="Change GitHub config">⚙️</button>
     </div>
   </nav>
 
@@ -421,35 +418,8 @@
   </div>
 </div>
 
-<!-- SETUP GUIDE MODAL -->
-<div class="overlay" id="setup-modal">
-  <div class="modal" style="max-width:580px;">
-    <div class="modal-header">
-      <div class="modal-title" style="color:var(--gold)">⚙️ Google OAuth Setup Guide</div>
-      <button class="modal-close" onclick="closeModal('setup-modal')">×</button>
-    </div>
-    <div class="modal-body" style="font-size:13px;line-height:1.9;color:var(--muted);">
-      <ol style="padding-left:20px;display:flex;flex-direction:column;gap:10px;">
-        <li>Go to <strong style="color:var(--text)">console.cloud.google.com</strong> → Create a new project (e.g. "Ledger")</li>
-        <li>Go to <strong style="color:var(--text)">APIs & Services → Library</strong> → Search for <strong style="color:var(--text)">Google Drive API</strong> → Enable it</li>
-        <li>Go to <strong style="color:var(--text)">APIs & Services → OAuth consent screen</strong> → External → Fill in app name → Add your Gmail as a test user</li>
-        <li>Go to <strong style="color:var(--text)">APIs & Services → Credentials</strong> → Create Credentials → OAuth 2.0 Client ID → Web application</li>
-        <li>Under <strong style="color:var(--text)">Authorized JavaScript origins</strong>, add:<br>
-          <code style="background:var(--surface2);padding:3px 8px;border-radius:6px;font-size:12px;display:inline-block;margin-top:4px">https://YOUR_USERNAME.github.io</code>
-        </li>
-        <li>Copy the <strong style="color:var(--text)">Client ID</strong> (looks like: <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:11px">xxxxxxxxxx.apps.googleusercontent.com</code>)</li>
-        <li>Open <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:12px">index.html</code> → find <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:12px">YOUR_GOOGLE_CLIENT_ID</code> → replace with your Client ID</li>
-        <li>Push to GitHub → enable GitHub Pages → done! ✅</li>
-      </ol>
-    </div>
-    <div class="modal-footer"><button class="btn btn-primary" onclick="closeModal('setup-modal')">Got it</button></div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
 <!-- SYNC FAB -->
-<button class="sync-fab" id="sync-fab" onclick="manualSync()" title="Sync now">
+<button class="sync-fab" id="sync-fab" onclick="manualSync()" title="Fetch latest from GitHub">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
     <path d="M3.51 9a9 9 0 0114.36-3.36L23 10M1 14l5.13 4.36A9 9 0 0018.49 15"/>
@@ -457,52 +427,40 @@
   <span>Sync</span>
 </button>
 
-<style>
-.sync-fab {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 150;
-  display: none;
-  align-items: center;
-  gap: 8px;
-  padding: 13px 20px;
-  background: var(--surface);
-  border: 1px solid rgba(240,192,96,0.35);
-  border-radius: 50px;
-  color: var(--gold);
-  font-family: var(--font-main);
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.45);
-  transition: all 0.2s ease;
-  letter-spacing: 0.3px;
-}
-.sync-fab:hover {
-  background: rgba(240,192,96,0.12);
-  border-color: rgba(240,192,96,0.6);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(240,192,96,0.2);
-}
-.sync-fab:active { transform: translateY(0); }
-.sync-fab svg { width: 15px; height: 15px; flex-shrink: 0; }
-.sync-fab.spinning svg { animation: spin-fab 0.8s linear infinite; }
-@keyframes spin-fab { to { transform: rotate(360deg); } }
-@media print { .sync-fab { display: none !important; } }
-</style>
+<div class="toast" id="toast"></div>
 
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
 // ════════════════════════════════════════
-// ⚙️  REPLACE THIS WITH YOUR CLIENT ID
+// CONFIG  (stored in localStorage)
 // ════════════════════════════════════════
-const GOOGLE_CLIENT_ID = '944932101917-1ub21i9eu9h92k3sloonbif75hrfc2u7.apps.googleusercontent.com';
+const CFG_KEY = 'ledger_github_cfg';
 
-const DRIVE_FILE_NAME = 'ledger-data.json';
-const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
+function loadConfig() {
+  try { return JSON.parse(localStorage.getItem(CFG_KEY)); } catch(e) { return null; }
+}
+function saveConfig() {
+  const token = document.getElementById('cfg-token').value.trim();
+  const owner = document.getElementById('cfg-owner').value.trim();
+  const repo  = document.getElementById('cfg-repo').value.trim();
+  const path  = (document.getElementById('cfg-path').value.trim() || 'ledger-data.json');
+  if (!token || !owner || !repo) {
+    ['cfg-token','cfg-owner','cfg-repo'].forEach(id => {
+      if (!document.getElementById(id).value.trim()) shakeEl(id);
+    });
+    return;
+  }
+  localStorage.setItem(CFG_KEY, JSON.stringify({ token, owner, repo, path }));
+  launch();
+}
+function resetConfig() {
+  if (!confirm('This will clear your GitHub config and return to the setup screen. Your data in GitHub is NOT deleted.')) return;
+  localStorage.removeItem(CFG_KEY);
+  location.reload();
+}
 
-// ── App state ──
+// ════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════
 const EXPENSE_CATS = ['🍔 Food & Dining','🛒 Groceries','🚗 Transport','🏠 Rent & Housing','💊 Health','🎬 Entertainment','👗 Shopping','📚 Education','💡 Utilities','📦 Other'];
 const INCOME_CATS  = ['💼 Salary','💰 Freelance','📈 Investments','🎁 Gift','🏦 Business','💵 Other Income'];
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -511,247 +469,138 @@ let data = [], currentTab = 'all', dateTab = 'income';
 let viewDate = new Date().toISOString().slice(0,10);
 const now = new Date();
 let viewMonth = now.getMonth(), viewYear = now.getFullYear();
-
-// ── Drive state ──
-let accessToken = null, driveFileId = null, syncTimer = null;
-
-// ── Persistent session helpers ──
-const SESSION_KEY = 'ledger_user';
-
-function saveSession(profile) {
-  localStorage.setItem(SESSION_KEY, JSON.stringify(profile));
-}
-function loadSession() {
-  try { return JSON.parse(localStorage.getItem(SESSION_KEY)); } catch(e) { return null; }
-}
-function clearSession() {
-  localStorage.removeItem(SESSION_KEY);
-}
+let fileSha = null;       // GitHub needs the current SHA to update a file
+let autoFetchTimer = null;
+let isSaving = false;     // prevent race: don't auto-fetch while a save is in-flight
+let cfg = null;
 
 // ════════════════════════════════════════
-// AUTH
+// GITHUB API
 // ════════════════════════════════════════
+function ghHeaders() {
+  return {
+    'Authorization': 'Bearer ' + cfg.token,
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'Content-Type': 'application/json'
+  };
+}
+function ghUrl() {
+  return `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path}`;
+}
 
-// Called on every page load — restores session from localStorage instantly.
-// Google's GSI implicit flow cannot silently refresh tokens without user
-// interaction, so we load local data right away and stay ready for manual sync.
-function tryAutoLogin() {
-  if (GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID') return;
-
-  const saved = loadSession();
-  if (!saved) return;
-
-  // Show the app immediately with cached profile + local data
-  applyProfile(saved);
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'block'; showFab();
-  data = JSON.parse(localStorage.getItem('ledger') || '[]');
-  renderAll();
-  setSyncStatus('synced', 'Loaded');
-
-  // Try a silent token refresh (prompt:'none'). This works when the user still
-  // has an active Google session and has previously granted consent.
-  // If it fails for any reason the callback fires immediately with an error,
-  // so the app never gets stuck — it just stays in local-data mode.
+async function fetchFromGitHub({ silent = false } = {}) {
+  if (isSaving) return; // skip auto-fetch during a save to avoid overwriting
+  if (!silent) setSyncStatus('syncing', 'Fetching…');
   try {
-    google.accounts.oauth2.initTokenClient({
-      client_id: GOOGLE_CLIENT_ID,
-      scope: DRIVE_SCOPE + ' https://www.googleapis.com/auth/userinfo.profile',
-      prompt: 'none',
-      error_callback: () => { setSyncStatus('synced', 'Local only'); },
-      callback: async (resp) => {
-        if (!resp || resp.error || !resp.access_token) {
-          setSyncStatus('synced', 'Local only');
-          return;
-        }
-        accessToken = resp.access_token;
-        setSyncStatus('syncing', 'Syncing…');
-        await loadFromDrive();
-        renderAll();
-        setSyncStatus('synced', 'Synced');
-      }
-    }).requestAccessToken({ prompt: 'none' });
-  } catch(e) {
-    setSyncStatus('synced', 'Local only');
-  }
-}
-
-function signIn() {
-  if (GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID') {
-    // Local-only mode — no Client ID set yet
-    document.getElementById('config-banner').style.display = 'flex';
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block'; showFab();
-    document.getElementById('user-name').textContent = 'Local mode';
-    data = JSON.parse(localStorage.getItem('ledger') || '[]');
-    renderAll();
-    setSyncStatus('synced', 'Local only');
-    showToast('⚠️ Running locally — set up OAuth to sync to Drive');
-    return;
-  }
-
-  google.accounts.oauth2.initTokenClient({
-    client_id: GOOGLE_CLIENT_ID,
-    scope: DRIVE_SCOPE + ' https://www.googleapis.com/auth/userinfo.profile',
-    callback: async (resp) => {
-      if (resp.error) { showToast('❌ Sign-in failed'); return; }
-      accessToken = resp.access_token;
-      await loadUserProfile();
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('app').style.display = 'block'; showFab();
-      setSyncStatus('syncing', 'Loading…');
-      await loadFromDrive();
+    const r = await fetch(ghUrl() + '?t=' + Date.now(), { headers: ghHeaders() });
+    if (r.status === 404) {
+      // File doesn't exist yet — start fresh
+      data = [];
+      fileSha = null;
+      setSyncStatus('synced', 'Ready (empty)');
       renderAll();
-    }
-  }).requestAccessToken();
-}
-
-function applyProfile(p) {
-  document.getElementById('user-name').textContent = p.given_name || p.name || 'Account';
-  const img = document.getElementById('user-avatar');
-  const fb  = document.getElementById('uaf');
-  if (p.picture) { img.src = p.picture; img.style.display = 'block'; fb.style.display = 'none'; }
-  else { fb.textContent = (p.name||'U')[0].toUpperCase(); fb.style.display = 'flex'; img.style.display = 'none'; }
-}
-
-async function loadUserProfile() {
-  try {
-    const r = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
-      headers: { Authorization: 'Bearer ' + accessToken }
-    });
-    const p = await r.json();
-    applyProfile(p);
-    saveSession(p); // persist so next visit auto-logs in
-  } catch(e) {}
-}
-
-function toggleDropdown() {
-  document.getElementById('user-dropdown').classList.toggle('open');
-}
-function signOut(e) {
-  e && e.stopPropagation();
-  if (accessToken) google.accounts.oauth2.revoke(accessToken, ()=>{});
-  accessToken = null; driveFileId = null; data = [];
-  clearSession(); // remove persisted session so login screen shows next time
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('user-dropdown').classList.remove('open');
-}
-function showFab() {
-  const fab = document.getElementById('sync-fab');
-  if (fab) fab.style.display = 'inline-flex';
-}
-function manualSync(e) {
-  e && e.stopPropagation();
-  document.getElementById('user-dropdown').classList.remove('open');
-  const fab = document.getElementById('sync-fab');
-  if (fab) fab.classList.add('spinning');
-
-  // Not signed in — can't fetch from Drive
-  if (!accessToken) {
-    setSyncStatus('error', 'Not signed in');
-    showToast('⚠️ Sign in with Google to sync from Drive');
-    if (fab) setTimeout(() => fab.classList.remove('spinning'), 600);
-    return;
-  }
-
-  // Fetch latest data from Drive and refresh the UI
-  setSyncStatus('syncing', 'Syncing…');
-  loadFromDrive().then(() => {
-    renderAll();
-    showToast('✅ Synced from Google Drive');
-  }).catch(() => {
-    showToast('❌ Sync failed — check your connection');
-  }).finally(() => {
-    if (fab) fab.classList.remove('spinning');
-  });
-}
-document.addEventListener('click', e => {
-  const chip = document.getElementById('user-chip');
-  if (chip && !chip.contains(e.target)) document.getElementById('user-dropdown').classList.remove('open');
-});
-
-// ════════════════════════════════════════
-// GOOGLE DRIVE
-// ════════════════════════════════════════
-async function driveReq(url, opts = {}) {
-  const r = await fetch(url, { ...opts, headers: { Authorization: 'Bearer ' + accessToken, ...opts.headers } });
-  if (!r.ok) throw new Error('Drive ' + r.status);
-  return r;
-}
-
-async function findOrCreate() {
-  const s = await driveReq(`https://www.googleapis.com/drive/v3/files?q=name='${DRIVE_FILE_NAME}'+and+trashed=false&fields=files(id)&spaces=drive`);
-  const j = await s.json();
-  if (j.files && j.files.length) { driveFileId = j.files[0].id; return; }
-
-  // Create new file
-  const boundary = 'ldr';
-  const meta = JSON.stringify({ name: DRIVE_FILE_NAME, mimeType: 'application/json' });
-  const body = '--' + boundary + '\r\nContent-Type: application/json\r\n\r\n' + meta + '\r\n'
-             + '--' + boundary + '\r\nContent-Type: application/json\r\n\r\n[]\r\n'
-             + '--' + boundary + '--';
-  const c = await driveReq('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id', {
-    method: 'POST', headers: { 'Content-Type': 'multipart/related; boundary=' + boundary }, body
-  });
-  driveFileId = (await c.json()).id;
-}
-
-async function loadFromDrive() {
-  try {
-    await findOrCreate();
-    const r = await driveReq(`https://www.googleapis.com/drive/v3/files/${driveFileId}?alt=media`);
-    const t = await r.text();
-    data = t ? JSON.parse(t) : [];
-    setSyncStatus('synced', 'Synced');
-  } catch(e) {
-    console.error(e);
-    data = JSON.parse(localStorage.getItem('ledger') || '[]');
-    setSyncStatus('error', 'Offline');
-    showToast('⚠️ Could not load from Drive — using local cache');
-  }
-}
-
-async function syncToDrive() {
-  if (!accessToken) {
-    localStorage.setItem('ledger', JSON.stringify(data));
-    return;
-  }
-  // Ensure we have the Drive file ID before uploading
-  if (!driveFileId) {
-    try { await findOrCreate(); } catch(e) {
-      localStorage.setItem('ledger', JSON.stringify(data));
-      setSyncStatus('error', 'Drive error');
-      showToast('⚠️ Could not locate Drive file — saved locally');
       return;
     }
-  }
-  setSyncStatus('syncing', 'Saving…');
-  try {
-    await driveReq(`https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    localStorage.setItem('ledger', JSON.stringify(data));
-    setSyncStatus('synced', 'Saved ✓');
-    setTimeout(() => setSyncStatus('synced', 'Synced'), 2000);
+    if (!r.ok) throw new Error('GitHub ' + r.status);
+    const j = await r.json();
+    fileSha = j.sha;
+    const decoded = JSON.parse(atob(j.content.replace(/\n/g, '')));
+    // Only re-render if data actually changed (compare by sha or length)
+    if (JSON.stringify(decoded) !== JSON.stringify(data)) {
+      data = decoded;
+      renderAll();
+    }
+    const t = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+    setSyncStatus('synced', 'Synced ' + t);
   } catch(e) {
-    console.error(e);
-    localStorage.setItem('ledger', JSON.stringify(data));
-    setSyncStatus('error', 'Sync failed');
-    showToast('⚠️ Sync failed — saved locally');
+    console.error('Fetch error:', e);
+    setSyncStatus('error', 'Fetch failed');
+    if (!silent) showToast('❌ Could not reach GitHub — check your token & repo');
   }
 }
 
-// Debounced save: instant localStorage + Drive sync after 1.5s idle
-function save() {
-  localStorage.setItem('ledger', JSON.stringify(data));
+async function saveToGitHub() {
+  isSaving = true;
   setSyncStatus('syncing', 'Saving…');
-  clearTimeout(syncTimer);
-  syncTimer = setTimeout(syncToDrive, 1500);
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+  const body = {
+    message: 'ledger: update transactions',
+    content,
+    ...(fileSha ? { sha: fileSha } : {})
+  };
+  try {
+    const r = await fetch(ghUrl(), {
+      method: 'PUT',
+      headers: ghHeaders(),
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) {
+      const err = await r.json().catch(() => ({}));
+      // SHA conflict — someone else updated the file; fetch latest then retry
+      if (r.status === 409 || (err.message && err.message.includes('sha'))) {
+        showToast('⚠️ Conflict detected — refreshing and retrying…');
+        await fetchFromGitHub({ silent: true });
+        isSaving = false;
+        await saveToGitHub();
+        return;
+      }
+      throw new Error('GitHub ' + r.status + ' ' + (err.message || ''));
+    }
+    const j = await r.json();
+    fileSha = j.content.sha; // update SHA for next write
+    const t = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+    setSyncStatus('synced', 'Saved ' + t);
+  } catch(e) {
+    console.error('Save error:', e);
+    setSyncStatus('error', 'Save failed');
+    showToast('❌ Could not save to GitHub — ' + e.message);
+  } finally {
+    isSaving = false;
+  }
 }
 
+// ════════════════════════════════════════
+// AUTO-FETCH every 10 seconds
+// ════════════════════════════════════════
+function startAutoFetch() {
+  if (autoFetchTimer) clearInterval(autoFetchTimer);
+  autoFetchTimer = setInterval(() => fetchFromGitHub({ silent: true }), 10000);
+}
+
+// ════════════════════════════════════════
+// MANUAL SYNC (Sync FAB / button)
+// ════════════════════════════════════════
+function manualSync() {
+  const fab = document.getElementById('sync-fab');
+  if (fab) fab.classList.add('spinning');
+  fetchFromGitHub({ silent: false }).then(() => {
+    showToast('✅ Fetched latest from GitHub');
+  }).finally(() => {
+    if (fab) setTimeout(() => fab.classList.remove('spinning'), 600);
+  });
+}
+
+// ════════════════════════════════════════
+// LAUNCH
+// ════════════════════════════════════════
+function launch() {
+  cfg = loadConfig();
+  if (!cfg) {
+    document.getElementById('setup-screen').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+    return;
+  }
+  document.getElementById('setup-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('sync-fab').style.display = 'inline-flex';
+  renderAll();
+  fetchFromGitHub().then(() => startAutoFetch());
+}
+
+// ════════════════════════════════════════
+// SYNC STATUS
+// ════════════════════════════════════════
 function setSyncStatus(state, label) {
   const el = document.getElementById('sync-indicator');
   el.className = 'sync-indicator ' + state;
@@ -788,23 +637,27 @@ function openDateModal() {
 }
 
 function saveTransaction() {
-  const name = document.getElementById('txn-name').value.trim();
+  const name   = document.getElementById('txn-name').value.trim();
   const amount = parseFloat(document.getElementById('txn-amount').value);
-  const type = document.getElementById('txn-type').value;
-  const cat  = document.getElementById('txn-category').value;
-  const date = document.getElementById('txn-date').value;
-  if (!name)           { shake('txn-name');   return; }
+  const type   = document.getElementById('txn-type').value;
+  const cat    = document.getElementById('txn-category').value;
+  const date   = document.getElementById('txn-date').value;
+  if (!name)              { shake('txn-name');   return; }
   if (!amount||amount<=0) { shake('txn-amount'); return; }
-  if (!date)           { shake('txn-date');   return; }
+  if (!date)              { shake('txn-date');   return; }
   data.push({ id: Date.now(), name, amount, type, cat: cat||'📦 Other', date });
-  save(); closeModal('add-modal'); renderAll();
-  showToast(type==='expense' ? '🔴 Expense added' : '🟢 Income added');
+  closeModal('add-modal');
+  renderAll();
+  showToast(type==='expense' ? '🔴 Expense added — saving to GitHub…' : '🟢 Income added — saving to GitHub…');
+  saveToGitHub();
 }
 
 function deleteTransaction(id) {
   data = data.filter(t => t.id !== id);
-  save(); renderAll();
+  renderAll();
   if (document.getElementById('date-modal').classList.contains('open')) renderDateView();
+  showToast('🗑️ Deleted — saving to GitHub…');
+  saveToGitHub();
 }
 
 function getMonthData() {
@@ -894,6 +747,7 @@ function shake(id) {
   el.animate([{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(-4px)'},{transform:'translateX(0)'}],{duration:300});
   setTimeout(()=>el.style.borderColor='',1000);
 }
+function shakeEl(id) { shake(id); }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -928,8 +782,6 @@ function printMonthPDF() {
   currentTab=saved; renderAll();
 }
 
-function showSetupGuide() { document.getElementById('setup-modal').classList.add('open'); }
-
 document.querySelectorAll('.overlay').forEach(o=>{
   o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});
 });
@@ -938,14 +790,14 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape')document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open'));
 });
 
-// Auto-login: wait for Google GSI library to be ready, then attempt silent sign-in
-(function waitForGSI() {
-  if (typeof google !== 'undefined' && google.accounts && google.accounts.oauth2) {
-    tryAutoLogin();
-  } else {
-    setTimeout(waitForGSI, 100);
-  }
-})();
+// ── Boot ── (config pre-filled)
+localStorage.setItem('ledger_github_cfg', JSON.stringify({
+  token: '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',
+  owner: 'Yugraj20',
+  repo:  'Ledger',
+  path:  'ledger-data.json'
+}));
+launch();
 </script>
 </body>
 </html>

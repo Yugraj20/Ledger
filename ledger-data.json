@@ -54,5 +54,13 @@
     "type": "expense",
     "cat": "Transport",
     "date": "2026-05-01"
+  },
+  {
+    "id": 1777818144502,
+    "name": "x",
+    "amount": 1,
+    "type": "expense",
+    "cat": "🍔 Food & Dining",
+    "date": "2026-05-03"
   }
 ]

@@ -647,25 +647,57 @@ function manualSync(e) {
   const fab = document.getElementById('sync-fab');
   if (fab) fab.classList.add('spinning');
 
-  // Local-only mode: no accessToken — save to localStorage and give feedback
-  if (!accessToken) {
-    setSyncStatus('syncing', 'Saving...');
-    try {
-      localStorage.setItem('ledger', JSON.stringify(data));
-      setSyncStatus('synced', 'Saved locally');
-      showToast('\u2705 Saved locally \u2014 sign in with Google to sync to Drive');
-      setTimeout(() => setSyncStatus('synced', 'Local only'), 3000);
-    } catch(err) {
-      setSyncStatus('error', 'Save failed');
-      showToast('\u274c Could not save \u2014 storage may be full');
-    }
+  // No Client ID configured — can't reach Drive at all
+  if (GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID') {
+    localStorage.setItem('ledger', JSON.stringify(data));
+    setSyncStatus('error', 'No OAuth');
+    showToast('⚠️ No Google Client ID set — data saved locally only');
     if (fab) setTimeout(() => fab.classList.remove('spinning'), 600);
     return;
   }
 
-  syncToDrive().finally(() => {
+  // Have a valid token — sync straight to Drive
+  if (accessToken) {
+    syncToDrive().finally(() => {
+      if (fab) fab.classList.remove('spinning');
+    });
+    return;
+  }
+
+  // Token missing or expired — request a fresh one silently, then sync
+  setSyncStatus('syncing', 'Reconnecting…');
+  try {
+    google.accounts.oauth2.initTokenClient({
+      client_id: GOOGLE_CLIENT_ID,
+      scope: DRIVE_SCOPE + ' https://www.googleapis.com/auth/userinfo.profile',
+      prompt: '',
+      error_callback: (err) => {
+        console.error('Token error', err);
+        setSyncStatus('error', 'Auth failed');
+        showToast('❌ Could not authenticate with Google — please sign in again');
+        if (fab) fab.classList.remove('spinning');
+      },
+      callback: async (resp) => {
+        if (!resp || resp.error || !resp.access_token) {
+          setSyncStatus('error', 'Auth failed');
+          showToast('❌ Could not get Google token — please sign in again');
+          if (fab) fab.classList.remove('spinning');
+          return;
+        }
+        accessToken = resp.access_token;
+        // Also refresh user profile & Drive file reference if needed
+        if (!driveFileId) {
+          try { await findOrCreate(); } catch(err) { /* will be retried in syncToDrive */ }
+        }
+        await syncToDrive();
+        if (fab) fab.classList.remove('spinning');
+      }
+    }).requestAccessToken({ prompt: '' });
+  } catch(err) {
+    setSyncStatus('error', 'Auth error');
+    showToast('❌ Google auth unavailable — try refreshing the page');
     if (fab) fab.classList.remove('spinning');
-  });
+  }
 }
 document.addEventListener('click', e => {
   const chip = document.getElementById('user-chip');
@@ -714,9 +746,18 @@ async function loadFromDrive() {
 }
 
 async function syncToDrive() {
-  if (!accessToken || !driveFileId) {
+  if (!accessToken) {
     localStorage.setItem('ledger', JSON.stringify(data));
     return;
+  }
+  // Ensure we have the Drive file ID before uploading
+  if (!driveFileId) {
+    try { await findOrCreate(); } catch(e) {
+      localStorage.setItem('ledger', JSON.stringify(data));
+      setSyncStatus('error', 'Drive error');
+      showToast('⚠️ Could not locate Drive file — saved locally');
+      return;
+    }
   }
   setSyncStatus('syncing', 'Saving…');
   try {

@@ -790,14 +790,25 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape')document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open'));
 });
 
-// ── Boot ── (config pre-filled)
-localStorage.setItem('ledger_github_cfg', JSON.stringify({
-  token: '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',
-  owner: 'Yugraj20',
-  repo:  'Ledger',
-  path:  'ledger-data.json'
-}));
-launch();
+// ── Boot ── fetch token halves from abc.txt and def.txt, then launch
+Promise.all([
+  fetch('abc.txt?t=' + Date.now()).then(r => { if (!r.ok) throw new Error('abc.txt not found'); return r.text(); }),
+  fetch('def.txt?t=' + Date.now()).then(r => { if (!r.ok) throw new Error('def.txt not found'); return r.text(); })
+])
+  .then(([half1, half2]) => {
+    const token = half1.trim() + half2.trim();
+    localStorage.setItem('ledger_github_cfg', JSON.stringify({
+      token: token,
+      owner: 'Yugraj20',
+      repo:  'Ledger',
+      path:  'ledger-data.json'
+    }));
+    launch();
+  })
+  .catch(err => {
+    console.error(err);
+    alert('Could not load token files\n\n' + err.message + '\n\nMake sure abc.txt and def.txt are in the same folder as index.html.');
+  });
 </script>
 </body>
 </html>

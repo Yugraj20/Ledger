@@ -54,5 +54,13 @@
     "type": "expense",
     "cat": "Transport",
     "date": "2026-05-01"
+  },
+  {
+    "id": 1777818252339,
+    "name": "XRay and ECG",
+    "amount": 498,
+    "type": "expense",
+    "cat": "💊 Health",
+    "date": "2026-05-03"
   }
 ]

@@ -647,57 +647,24 @@ function manualSync(e) {
   const fab = document.getElementById('sync-fab');
   if (fab) fab.classList.add('spinning');
 
-  // No Client ID configured — can't reach Drive at all
-  if (GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID') {
-    localStorage.setItem('ledger', JSON.stringify(data));
-    setSyncStatus('error', 'No OAuth');
-    showToast('⚠️ No Google Client ID set — data saved locally only');
+  // Not signed in — can't fetch from Drive
+  if (!accessToken) {
+    setSyncStatus('error', 'Not signed in');
+    showToast('⚠️ Sign in with Google to sync from Drive');
     if (fab) setTimeout(() => fab.classList.remove('spinning'), 600);
     return;
   }
 
-  // Have a valid token — sync straight to Drive
-  if (accessToken) {
-    syncToDrive().finally(() => {
-      if (fab) fab.classList.remove('spinning');
-    });
-    return;
-  }
-
-  // Token missing or expired — request a fresh one silently, then sync
-  setSyncStatus('syncing', 'Reconnecting…');
-  try {
-    google.accounts.oauth2.initTokenClient({
-      client_id: GOOGLE_CLIENT_ID,
-      scope: DRIVE_SCOPE + ' https://www.googleapis.com/auth/userinfo.profile',
-      prompt: '',
-      error_callback: (err) => {
-        console.error('Token error', err);
-        setSyncStatus('error', 'Auth failed');
-        showToast('❌ Could not authenticate with Google — please sign in again');
-        if (fab) fab.classList.remove('spinning');
-      },
-      callback: async (resp) => {
-        if (!resp || resp.error || !resp.access_token) {
-          setSyncStatus('error', 'Auth failed');
-          showToast('❌ Could not get Google token — please sign in again');
-          if (fab) fab.classList.remove('spinning');
-          return;
-        }
-        accessToken = resp.access_token;
-        // Also refresh user profile & Drive file reference if needed
-        if (!driveFileId) {
-          try { await findOrCreate(); } catch(err) { /* will be retried in syncToDrive */ }
-        }
-        await syncToDrive();
-        if (fab) fab.classList.remove('spinning');
-      }
-    }).requestAccessToken({ prompt: '' });
-  } catch(err) {
-    setSyncStatus('error', 'Auth error');
-    showToast('❌ Google auth unavailable — try refreshing the page');
+  // Fetch latest data from Drive and refresh the UI
+  setSyncStatus('syncing', 'Syncing…');
+  loadFromDrive().then(() => {
+    renderAll();
+    showToast('✅ Synced from Google Drive');
+  }).catch(() => {
+    showToast('❌ Sync failed — check your connection');
+  }).finally(() => {
     if (fab) fab.classList.remove('spinning');
-  }
+  });
 }
 document.addEventListener('click', e => {
   const chip = document.getElementById('user-chip');

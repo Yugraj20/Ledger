@@ -1,1 +1,50 @@
-[{"id":1777743164080,"name":"Car Petrol","amount":2400,"type":"expense","cat":"🚗 Transport","date":"2026-05-01"},{"id":1777743188865,"name":"Driving Track Practice","amount":500,"type":"expense","cat":"🚗 Transport","date":"2026-05-01"},{"id":1777743218253,"name":"Nanan Ji Neuro Doctor","amount":1800,"type":"expense","cat":"💊 Health","date":"2026-05-01"},{"id":1777743236169,"name":"Sprite 2L","amount":109,"type":"expense","cat":"🍔 Food & Dining","date":"2026-05-01"},{"id":1777743260447,"name":"Rent Shivani","amount":20000,"type":"income","cat":"💵 Other Income","date":"2026-05-01"},{"id":1777743323131,"name":"Jamadar","amount":150,"type":"expense","cat":"📦 Other","date":"2026-05-02"},{"id":1777812775706,"name":"Carpenter Naresh Almirah Atul","amount":1000,"type":"expense","cat":"🏠 Rent & Housing","date":"2026-05-03"}]
+[
+  {
+    "id": 1777743164080,
+    "name": "Car Petrol",
+    "amount": 2400,
+    "type": "expense",
+    "cat": "ð Transport",
+    "date": "2026-05-01"
+  },
+  {
+    "id": 1777743188865,
+    "name": "Driving Track Practice",
+    "amount": 500,
+    "type": "expense",
+    "cat": "ð Transport",
+    "date": "2026-05-01"
+  },
+  {
+    "id": 1777743218253,
+    "name": "Nanan Ji Neuro Doctor",
+    "amount": 1800,
+    "type": "expense",
+    "cat": "ð Health",
+    "date": "2026-05-01"
+  },
+  {
+    "id": 1777743236169,
+    "name": "Sprite 2L",
+    "amount": 109,
+    "type": "expense",
+    "cat": "ð Food & Dining",
+    "date": "2026-05-01"
+  },
+  {
+    "id": 1777743260447,
+    "name": "Rent Shivani",
+    "amount": 20000,
+    "type": "income",
+    "cat": "ðµ Other Income",
+    "date": "2026-05-01"
+  },
+  {
+    "id": 1777743323131,
+    "name": "Jamadar",
+    "amount": 150,
+    "type": "expense",
+    "cat": "ð¦ Other",
+    "date": "2026-05-02"
+  }
+]

@@ -4,7 +4,7 @@
     "name": "Driving Track Practice",
     "amount": 500,
     "type": "expense",
-    "cat": "ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Transport",
+    "cat": "Transport",
     "date": "2026-05-01"
   },
   {
@@ -12,7 +12,7 @@
     "name": "Nanan Ji Neuro Doctor",
     "amount": 1800,
     "type": "expense",
-    "cat": "ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Health",
+    "cat": "Health",
     "date": "2026-05-01"
   },
   {
@@ -20,7 +20,7 @@
     "name": "Sprite 2L",
     "amount": 109,
     "type": "expense",
-    "cat": "ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Food & Dining",
+    "cat": "Food & Dining",
     "date": "2026-05-01"
   },
   {
@@ -28,7 +28,7 @@
     "name": "Rent Shivani",
     "amount": 20000,
     "type": "income",
-    "cat": "ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµ Other Income",
+    "cat": "Other Income",
     "date": "2026-05-01"
   },
   {
@@ -36,7 +36,7 @@
     "name": "Carpenter Naresh Almirah Atul",
     "amount": 1000,
     "type": "expense",
-    "cat": "ÃÂ°ÃÂÃÂÃÂ  Rent & Housing",
+    "cat": "Rent & Housing",
     "date": "2026-05-03"
   },
   {
@@ -44,7 +44,7 @@
     "name": "Jamadar",
     "amount": 150,
     "type": "expense",
-    "cat": "ð¦ Other",
+    "cat": "Other",
     "date": "2026-05-02"
   },
   {
@@ -52,7 +52,7 @@
     "name": "Car Petrol",
     "amount": 2400,
     "type": "expense",
-    "cat": "🚗 Transport",
+    "cat": "Transport",
     "date": "2026-05-01"
   }
 ]

@@ -695,7 +695,7 @@ function txnHTML(t) {
     <div class="txn-icon ${isExp?'icon-expense':'icon-income'}">${isExp?'↓':'↑'}</div>
     <div class="txn-info">
       <div class="txn-name">${escHtml(t.name)}</div>
-      <div class="txn-meta">${t.cat.replace(/^\p{Emoji_Presentation}\s*/u, '')} · ${dStr}</div>
+      <div class="txn-meta">${t.cat.split(' ').slice(1).join(' ')} · ${dStr}</div>
     </div>
     <div class="txn-amount ${isExp?'amount-expense':'amount-income'}">${isExp?'−':'+'}${fmt(t.amount)}</div>
     <button class="txn-del" onclick="deleteTransaction(${t.id})" title="Delete">×</button>

@@ -158,9 +158,9 @@
   .txn-item { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 20px; transition: all 0.2s; animation: fadeIn 0.3s ease; }
   .txn-item:hover { background: var(--surface2); border-color: rgba(255,255,255,0.13); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-  .txn-icon { width: 46px; height: 46px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-  .icon-expense { background: rgba(255,107,107,0.12); }
-  .icon-income  { background: rgba(56,217,169,0.12); }
+  .txn-icon { width: 46px; height: 46px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; flex-shrink: 0; }
+  .icon-expense { background: rgba(255,107,107,0.12); color: var(--red); }
+  .icon-income  { background: rgba(56,217,169,0.12);  color: var(--teal); }
   .txn-info { flex: 1; min-width: 0; }
   .txn-name { font-size: 15px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-style: italic; }
   .txn-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
@@ -329,10 +329,10 @@
     <div class="nav-actions">
       <button class="btn btn-expense" onclick="openModal('expense')"><span>−</span> New Expense</button>
       <button class="btn btn-income"  onclick="openModal('income')"><span>+</span> New Income</button>
-      <button class="btn btn-date"    onclick="openDateModal()">📅 View by Date</button>
-      <button class="btn btn-pdf"     onclick="printMonthPDF()">🖨️ Print PDF</button>
-      <button class="btn btn-save"    onclick="saveToCSV()">💾 CSV</button>
-      <button class="btn btn-settings" onclick="resetConfig()" title="Change GitHub config">⚙️</button>
+      <button class="btn btn-date"    onclick="openDateModal()">View by Date</button>
+      <button class="btn btn-pdf"     onclick="printMonthPDF()">Print PDF</button>
+      <button class="btn btn-save"    onclick="saveToCSV()">CSV</button>
+      <button class="btn btn-settings" onclick="resetConfig()" title="Change GitHub config">⚙</button>
     </div>
   </nav>
 
@@ -516,7 +516,7 @@ async function fetchFromGitHub({ silent = false } = {}) {
   } catch(e) {
     console.error('Fetch error:', e);
     setSyncStatus('error', 'Fetch failed');
-    if (!silent) showToast('❌ Could not reach GitHub — check your token & repo');
+    if (!silent) showToast('Could not reach GitHub — check your token & repo');
   }
 }
 
@@ -539,7 +539,7 @@ async function saveToGitHub() {
       const err = await r.json().catch(() => ({}));
       // SHA conflict — someone else updated the file; fetch latest then retry
       if (r.status === 409 || (err.message && err.message.includes('sha'))) {
-        showToast('⚠️ Conflict detected — refreshing and retrying…');
+        showToast('Conflict detected — refreshing and retrying…');
         await fetchFromGitHub({ silent: true });
         isSaving = false;
         await saveToGitHub();
@@ -554,7 +554,7 @@ async function saveToGitHub() {
   } catch(e) {
     console.error('Save error:', e);
     setSyncStatus('error', 'Save failed');
-    showToast('❌ Could not save to GitHub — ' + e.message);
+    showToast('Could not save to GitHub — ' + e.message);
   } finally {
     isSaving = false;
   }
@@ -575,7 +575,7 @@ function manualSync() {
   const fab = document.getElementById('sync-fab');
   if (fab) fab.classList.add('spinning');
   fetchFromGitHub({ silent: false }).then(() => {
-    showToast('✅ Fetched latest from GitHub');
+    showToast('Fetched latest from GitHub');
   }).finally(() => {
     if (fab) setTimeout(() => fab.classList.remove('spinning'), 600);
   });
@@ -645,10 +645,10 @@ function saveTransaction() {
   if (!name)              { shake('txn-name');   return; }
   if (!amount||amount<=0) { shake('txn-amount'); return; }
   if (!date)              { shake('txn-date');   return; }
-  data.push({ id: Date.now(), name, amount, type, cat: cat||'📦 Other', date });
+  data.push({ id: Date.now(), name, amount, type, cat: cat||'Other', date });
   closeModal('add-modal');
   renderAll();
-  showToast(type==='expense' ? '🔴 Expense added — saving to GitHub…' : '🟢 Income added — saving to GitHub…');
+  showToast(type==='expense' ? 'Expense added — saving to GitHub…' : 'Income added — saving to GitHub…');
   saveToGitHub();
 }
 
@@ -656,7 +656,7 @@ function deleteTransaction(id) {
   data = data.filter(t => t.id !== id);
   renderAll();
   if (document.getElementById('date-modal').classList.contains('open')) renderDateView();
-  showToast('🗑️ Deleted — saving to GitHub…');
+  showToast('Deleted — saving to GitHub…');
   saveToGitHub();
 }
 
@@ -682,7 +682,7 @@ function renderAll() {
   if (currentTab !== 'all') filtered = filtered.filter(t=>t.type===currentTab);
   const list = document.getElementById('txn-list');
   if (!filtered.length) {
-    list.innerHTML = `<div class="empty-state"><div class="big">${currentTab==='expense'?'🚫':currentTab==='income'?'💸':'📭'}</div><div>No ${currentTab==='all'?'transactions':currentTab} this month</div></div>`;
+    list.innerHTML = `<div class="empty-state"><div>No ${currentTab==='all'?'transactions':currentTab} this month</div></div>`;
     return;
   }
   list.innerHTML = filtered.map(txnHTML).join('');
@@ -692,10 +692,10 @@ function txnHTML(t) {
   const isExp = t.type==='expense';
   const dStr  = new Date(t.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
   return `<div class="txn-item">
-    <div class="txn-icon ${isExp?'icon-expense':'icon-income'}">${t.cat.split(' ')[0]}</div>
+    <div class="txn-icon ${isExp?'icon-expense':'icon-income'}">${isExp?'↓':'↑'}</div>
     <div class="txn-info">
       <div class="txn-name">${escHtml(t.name)}</div>
-      <div class="txn-meta">${t.cat.split(' ').slice(1).join(' ')} · ${dStr}</div>
+      <div class="txn-meta">${t.cat.replace(/^\p{Emoji_Presentation}\s*/u, '')} · ${dStr}</div>
     </div>
     <div class="txn-amount ${isExp?'amount-expense':'amount-income'}">${isExp?'−':'+'}${fmt(t.amount)}</div>
     <button class="txn-del" onclick="deleteTransaction(${t.id})" title="Delete">×</button>
@@ -728,7 +728,7 @@ function renderDateView() {
   const list  = document.getElementById('date-txn-list');
   if (!items.length) {
     const d = new Date(sel).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
-    list.innerHTML = `<div class="empty-state"><div class="big">${dateTab==='income'?'💰':'🧾'}</div><div>No ${dateTab} on ${d}</div></div>`;
+    list.innerHTML = `<div class="empty-state"><div>No ${dateTab} on ${d}</div></div>`;
     return;
   }
   list.innerHTML = items.map(txnHTML).join('');
@@ -760,13 +760,13 @@ function escHtml(s) {
 }
 
 function saveToCSV() {
-  if (!data.length) { showToast('⚠️ No data to export'); return; }
+  if (!data.length) { showToast('No data to export'); return; }
   const sorted = [...data].sort((a,b)=>new Date(a.date)-new Date(b.date));
   const header = ['Date','Type','Description','Category','Amount (₹)'];
   const rows = sorted.map(t=>[t.date,t.type.charAt(0).toUpperCase()+t.type.slice(1),'"'+t.name.replace(/"/g,'""')+'"','"'+t.cat.replace(/"/g,'""')+'"',t.amount.toFixed(2)]);
   const csv = [header,...rows].map(r=>r.join(',')).join('\n');
   const a = Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:`ledger-${MONTHS[viewMonth]}-${viewYear}.csv`});
-  a.click(); showToast('✅ Exported as CSV');
+  a.click(); showToast('Exported as CSV');
 }
 
 function printMonthPDF() {

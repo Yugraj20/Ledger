@@ -60,7 +60,7 @@
     "name": "XRay and ECG",
     "amount": 498,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Health",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Health",
     "date": "2026-05-03"
   },
   {
@@ -68,13 +68,21 @@
     "name": "KHARBUZE",
     "amount": 120,
     "type": "expense",
-    "cat": "ð Groceries",
+    "cat": "Ã°ÂÂÂ Groceries",
     "date": "2026-05-04"
   },
   {
     "id": 1777915865768,
     "name": "TOMATO , POTATO , NIMBU",
     "amount": 1000,
+    "type": "expense",
+    "cat": "ð Groceries",
+    "date": "2026-05-04"
+  },
+  {
+    "id": 1777915877040,
+    "name": "VEGETABLES",
+    "amount": 290,
     "type": "expense",
     "cat": "🛒 Groceries",
     "date": "2026-05-04"

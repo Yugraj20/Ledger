@@ -60,7 +60,15 @@
     "name": "XRay and ECG",
     "amount": 498,
     "type": "expense",
-    "cat": "💊 Health",
+    "cat": "ð Health",
     "date": "2026-05-03"
+  },
+  {
+    "id": 1777915846546,
+    "name": "KHARBUZE",
+    "amount": 120,
+    "type": "expense",
+    "cat": "🛒 Groceries",
+    "date": "2026-05-04"
   }
 ]

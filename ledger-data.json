@@ -190,5 +190,13 @@
     "type": "expense",
     "cat": "🛒 Groceries",
     "date": "2026-05-08"
+  },
+  {
+    "id": 1778419713064,
+    "name": "Nani Medicine",
+    "amount": 280,
+    "type": "expense",
+    "cat": "💊 Health",
+    "date": "2026-05-08"
   }
 ]

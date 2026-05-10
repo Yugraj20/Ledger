@@ -198,5 +198,13 @@
     "type": "expense",
     "cat": "💊 Health",
     "date": "2026-05-08"
+  },
+  {
+    "id": 1778419740098,
+    "name": "Kaju And Pista",
+    "amount": 575,
+    "type": "expense",
+    "cat": "🛒 Groceries",
+    "date": "2026-05-09"
   }
 ]

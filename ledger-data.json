@@ -230,5 +230,13 @@
     "type": "expense",
     "cat": "🛒 Groceries",
     "date": "2026-05-09"
+  },
+  {
+    "id": 1778419868237,
+    "name": "TV wall mount",
+    "amount": 550,
+    "type": "expense",
+    "cat": "💡 Utilities",
+    "date": "2026-05-09"
   }
 ]

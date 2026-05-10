@@ -254,5 +254,13 @@
     "type": "expense",
     "cat": "🛒 Groceries",
     "date": "2026-05-09"
+  },
+  {
+    "id": 1778421447843,
+    "name": "Atul Rent",
+    "amount": 20500,
+    "type": "income",
+    "cat": "💵 Other Income",
+    "date": "2026-05-10"
   }
 ]

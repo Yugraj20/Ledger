@@ -214,5 +214,13 @@
     "type": "expense",
     "cat": "🛒 Groceries",
     "date": "2026-05-09"
+  },
+  {
+    "id": 1778419789278,
+    "name": "Barfi Bharat Sweets 0.5kg",
+    "amount": 400,
+    "type": "expense",
+    "cat": "🛒 Groceries",
+    "date": "2026-05-09"
   }
 ]

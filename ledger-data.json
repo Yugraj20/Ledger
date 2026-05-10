@@ -238,5 +238,13 @@
     "type": "expense",
     "cat": "💡 Utilities",
     "date": "2026-05-09"
+  },
+  {
+    "id": 1778420178946,
+    "name": "Ice Cream",
+    "amount": 1109,
+    "type": "expense",
+    "cat": "🛒 Groceries",
+    "date": "2026-05-09"
   }
 ]

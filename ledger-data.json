@@ -246,5 +246,13 @@
     "type": "expense",
     "cat": "🛒 Groceries",
     "date": "2026-05-09"
+  },
+  {
+    "id": 1778420260760,
+    "name": "Mccain,daal , gluecon-d ,boondi, B-Natural",
+    "amount": 829,
+    "type": "expense",
+    "cat": "🛒 Groceries",
+    "date": "2026-05-09"
   }
 ]

@@ -263,12 +263,4 @@
     "cat": "💵 Other Income",
     "date": "2026-05-10"
   }
-  {
-    "id": 1778432675788,
-    "name": "Taya ji rent",
-    "amount": 9750,
-    "type": "expense",
-    "cat": "🏠 Rent & Housing",
-    "date": "2026-05-10"
-  }
 ]

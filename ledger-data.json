@@ -222,5 +222,13 @@
     "type": "expense",
     "cat": "🛒 Groceries",
     "date": "2026-05-09"
+  },
+  {
+    "id": 1778419819024,
+    "name": "Sauce",
+    "amount": 90,
+    "type": "expense",
+    "cat": "🛒 Groceries",
+    "date": "2026-05-09"
   }
 ]

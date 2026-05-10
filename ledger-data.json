@@ -206,5 +206,13 @@
     "type": "expense",
     "cat": "🛒 Groceries",
     "date": "2026-05-09"
+  },
+  {
+    "id": 1778419759241,
+    "name": "750 gm Paneer",
+    "amount": 330,
+    "type": "expense",
+    "cat": "🛒 Groceries",
+    "date": "2026-05-09"
   }
 ]

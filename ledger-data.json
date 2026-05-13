@@ -12,7 +12,7 @@
     "name": "Nanan Ji Neuro Doctor",
     "amount": 1800,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Health",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Health",
     "date": "2026-05-01"
   },
   {
@@ -28,7 +28,7 @@
     "name": "Rent Shivani",
     "amount": 20000,
     "type": "income",
-    "cat": "Ã°ÂÂÂµ Other Income",
+    "cat": "ÃÂ°ÃÂÃÂÃÂµ Other Income",
     "date": "2026-05-01"
   },
   {
@@ -60,7 +60,7 @@
     "name": "XRay and ECG",
     "amount": 498,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Health",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Health",
     "date": "2026-05-03"
   },
   {
@@ -68,7 +68,7 @@
     "name": "KHARBUZE",
     "amount": 120,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-04"
   },
   {
@@ -76,7 +76,7 @@
     "name": "VEGETABLES",
     "amount": 290,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-04"
   },
   {
@@ -84,7 +84,7 @@
     "name": "TOMATO , POTATO , NIMBU",
     "amount": 100,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-04"
   },
   {
@@ -92,7 +92,7 @@
     "name": "RAGI AATA, DESI KHAND, ARIEL",
     "amount": 883,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-03"
   },
   {
@@ -100,7 +100,7 @@
     "name": "GHADI",
     "amount": 195,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-04"
   },
   {
@@ -108,7 +108,7 @@
     "name": "BREAD AND HARPIC",
     "amount": 390,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-03"
   },
   {
@@ -116,7 +116,7 @@
     "name": "MOONG DAAL",
     "amount": 159,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-03"
   },
   {
@@ -129,10 +129,10 @@
   },
   {
     "id": 1777963370277,
-    "name": "Custard and Ã°ÂÂÂ Groceries",
+    "name": "Custard and ÃÂ°ÃÂÃÂÃÂ Groceries",
     "amount": 240,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-05"
   },
   {
@@ -140,7 +140,7 @@
     "name": "Vegetable",
     "amount": 170,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-06"
   },
   {
@@ -172,7 +172,7 @@
     "name": "Pradeep",
     "amount": 2639,
     "type": "income",
-    "cat": "Ã°ÂÂÂµ Other Income",
+    "cat": "ÃÂ°ÃÂÃÂÃÂµ Other Income",
     "date": "2026-05-06"
   },
   {
@@ -188,7 +188,7 @@
     "name": "Rahul Bakers",
     "amount": 890,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-08"
   },
   {
@@ -196,7 +196,7 @@
     "name": "Nani Medicine",
     "amount": 280,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Health",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Health",
     "date": "2026-05-08"
   },
   {
@@ -204,7 +204,7 @@
     "name": "Kaju And Pista",
     "amount": 575,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-09"
   },
   {
@@ -212,7 +212,7 @@
     "name": "750 gm Paneer",
     "amount": 330,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-09"
   },
   {
@@ -220,7 +220,7 @@
     "name": "Barfi Bharat Sweets 0.5kg",
     "amount": 400,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-09"
   },
   {
@@ -228,7 +228,7 @@
     "name": "Sauce",
     "amount": 90,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-09"
   },
   {
@@ -236,7 +236,7 @@
     "name": "TV wall mount",
     "amount": 550,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ¡ Utilities",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ¡ Utilities",
     "date": "2026-05-09"
   },
   {
@@ -244,7 +244,7 @@
     "name": "Ice Cream",
     "amount": 1109,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-09"
   },
   {
@@ -252,7 +252,7 @@
     "name": "Mccain,daal , gluecon-d ,boondi, B-Natural",
     "amount": 829,
     "type": "expense",
-    "cat": "Ã°ÂÂÂ Groceries",
+    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-09"
   },
   {
@@ -260,7 +260,7 @@
     "name": "Atul Rent",
     "amount": 20500,
     "type": "income",
-    "cat": "Ã°ÂÂÂµ Other Income",
+    "cat": "ÃÂ°ÃÂÃÂÃÂµ Other Income",
     "date": "2026-05-10"
   },
   {
@@ -268,13 +268,21 @@
     "name": "Taya Ji Rent",
     "amount": 9750,
     "type": "expense",
-    "cat": "ð  Rent & Housing",
+    "cat": "Ã°ÂÂÂ  Rent & Housing",
     "date": "2026-05-10"
   },
   {
     "id": 1778657515082,
     "name": "Rajdhani medicos",
     "amount": 1000,
+    "type": "expense",
+    "cat": "ð Health",
+    "date": "2026-05-12"
+  },
+  {
+    "id": 1778657573890,
+    "name": "Gol Gappe,Bhalle Papdi,TIKKI",
+    "amount": 350,
     "type": "expense",
     "cat": "💊 Health",
     "date": "2026-05-12"

@@ -358,5 +358,13 @@
     "type": "expense",
     "cat": "💊 Health",
     "date": "2026-05-18"
+  },
+  {
+    "id": 1779168993926,
+    "name": "Cab Alipur",
+    "amount": 156,
+    "type": "expense",
+    "cat": "🚗 Transport",
+    "date": "2026-05-17"
   }
 ]

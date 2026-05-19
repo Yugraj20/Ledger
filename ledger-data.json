@@ -366,5 +366,13 @@
     "type": "expense",
     "cat": "🚗 Transport",
     "date": "2026-05-17"
+  },
+  {
+    "id": 1779169072447,
+    "name": "Alipur Cab",
+    "amount": 195,
+    "type": "expense",
+    "cat": "🚗 Transport",
+    "date": "2026-05-17"
   }
 ]

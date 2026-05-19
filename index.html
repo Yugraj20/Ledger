@@ -4,16 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Ledger — Personal Finance</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #080a0f; --surface: #0f1117; --surface2: #161923;
-    --border: rgba(255,255,255,0.08);
-    --gold: #f2c96a; --gold2: #e8a830;
-    --teal: #38d9a9; --red: #ff6b6b;
-    --text: #f2f0ec; --muted: #8a91a0;
+    --bg: #07090e; --surface: #0d1018; --surface2: #141720;
+    --border: rgba(255,255,255,0.07);
+    --gold: #f0c060; --gold2: #d9a020;
+    --teal: #34d399; --red: #f87171;
+    --text: #eeecea; --muted: #7a8294;
     --shadow: 0 8px 40px rgba(0,0,0,0.6);
-    --font-main: 'Times New Roman', Times, serif;
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: var(--font-main); min-height: 100vh; overflow-x: hidden; }
@@ -40,7 +40,7 @@
     position: relative; overflow: hidden;
   }
   .setup-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold2), var(--gold)); }
-  .setup-brand { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--text); margin-bottom: 6px; }
+  .setup-brand { font-family: 'Inter', sans-serif; font-size: 34px; font-weight: 800; color: var(--text); margin-bottom: 6px; letter-spacing: -1px; }
   .setup-brand span { color: var(--gold); }
   .setup-tagline { font-size: 14px; color: var(--muted); margin-bottom: 32px; line-height: 1.7; }
   .setup-fields { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
@@ -104,7 +104,7 @@
     border-bottom: 1px solid var(--border); margin-bottom: 40px;
   }
   .nav-left { display: flex; align-items: center; gap: 16px; }
-  .brand { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; letter-spacing: -0.5px; color: var(--text); text-shadow: 0 0 30px rgba(242,201,106,0.2); }
+  .brand { font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -1px; color: var(--text); }
   .brand span { color: var(--gold); }
   .nav-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 
@@ -129,7 +129,7 @@
 
   /* Hero */
   .hero { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 40px; }
-  .summary-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+  .summary-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px 28px; position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
   .summary-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
   .summary-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
   .card-balance::before    { background: linear-gradient(90deg, var(--gold), var(--gold2)); }
@@ -138,15 +138,15 @@
   .card-income-sum         { box-shadow: inset 0 0 60px rgba(56,217,169,0.03); }
   .card-expense-sum::before{ background: linear-gradient(90deg, var(--red), #ff9a9a); }
   .card-expense-sum        { box-shadow: inset 0 0 60px rgba(255,107,107,0.03); }
-  .summary-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-  .summary-amount { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; line-height: 1; margin-bottom: 8px; letter-spacing: -0.5px; }
+  .summary-label { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .summary-amount { font-family: 'Inter', sans-serif; font-size: 34px; font-weight: 700; line-height: 1; margin-bottom: 8px; letter-spacing: -1px; }
   .card-balance .summary-amount    { color: var(--gold); }
   .card-income-sum .summary-amount { color: var(--teal); }
   .card-expense-sum .summary-amount{ color: var(--red); }
   .summary-sub { font-size: 12px; color: var(--muted); }
 
   .month-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-  .month-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; letter-spacing: -0.3px; }
+  .month-title { font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
 
   /* Tabs */
   .tabs { display: flex; gap: 4px; background: var(--surface); padding: 4px; border-radius: 14px; border: 1px solid var(--border); margin-bottom: 24px; width: fit-content; }
@@ -155,16 +155,16 @@
 
   /* Transactions */
   .txn-list { display: flex; flex-direction: column; gap: 10px; }
-  .txn-item { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px 20px; transition: all 0.2s; animation: fadeIn 0.3s ease; }
+  .txn-item { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; transition: all 0.2s; animation: fadeIn 0.3s ease; }
   .txn-item:hover { background: var(--surface2); border-color: rgba(255,255,255,0.13); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-  .txn-icon { width: 46px; height: 46px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; flex-shrink: 0; }
+  .txn-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
   .icon-expense { background: rgba(255,107,107,0.12); color: var(--red); }
   .icon-income  { background: rgba(56,217,169,0.12);  color: var(--teal); }
   .txn-info { flex: 1; min-width: 0; }
-  .txn-name { font-size: 15px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-style: italic; }
+  .txn-name { font-size: 14px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .txn-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
-  .txn-amount { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+  .txn-amount { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; flex-shrink: 0; letter-spacing: -0.3px; }
   .amount-expense { color: var(--red); }
   .amount-income  { color: var(--teal); }
   .txn-del { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 16px; padding: 4px; transition: color 0.2s; opacity: 0; flex-shrink: 0; }
@@ -179,12 +179,12 @@
   .modal { background: var(--surface); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; width: 100%; max-width: 440px; box-shadow: var(--shadow); animation: modalIn 0.3s cubic-bezier(0.34,1.56,0.64,1); overflow: hidden; }
   @keyframes modalIn { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
   .modal-header { padding: 22px 24px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-  .modal-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; }
+  .modal-title { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
   .modal-close { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 20px; transition: color 0.2s; line-height: 1; }
   .modal-close:hover { color: var(--text); }
   .modal-body { padding: 22px 24px; }
   .form-group { margin-bottom: 18px; }
-  .form-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .form-label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
   .form-input { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 13px 15px; color: var(--text); font-family: var(--font-main); font-size: 15px; transition: border-color 0.2s, box-shadow 0.2s; outline: none; -webkit-appearance: none; }
   .form-input:focus { border-color: rgba(242,201,106,0.5); box-shadow: 0 0 0 3px rgba(242,201,106,0.08); }
   .form-input::placeholder { color: var(--muted); }
@@ -236,7 +236,7 @@
     #setup-screen, nav, .tabs, .month-nav-btn, .btn-pdf, .btn-save, .btn-expense, .btn-income, .btn-date, .txn-del, .toast, .overlay, #config-banner, .sync-fab { display: none !important; }
     .app { max-width: 100%; padding: 0; display: block !important; }
     .print-header { display: flex !important; align-items: center; justify-content: space-between; border-bottom: 2px solid #e8a830; padding-bottom: 12px; margin-bottom: 22px; }
-    .print-header .brand { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; color: #111; }
+    .print-header .brand { font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 800; color: #111; letter-spacing: -1px; }
     .print-header .brand span { color: #e8a830; }
     .print-header .print-period { font-size: 14px; color: #555; font-weight: 600; }
     .summary-card { background: #f8f8f8 !important; border: 1px solid #ddd !important; border-radius: 12px; break-inside: avoid; }
@@ -302,8 +302,8 @@
       </div>
       <div>
         <label class="setup-label">File path in repo</label>
-        <input class="setup-input" id="cfg-path" type="text" placeholder="ledger-data.json" autocomplete="off" />
-        <div class="setup-hint">e.g. <code>ledger-data.json</code> or <code>data/transactions.json</code></div>
+        <input class="setup-input" id="cfg-path" type="text" placeholder="ledger-data.txt" autocomplete="off" />
+        <div class="setup-hint">e.g. <code>ledger-data.txt</code> or <code>data/transactions.txt</code></div>
       </div>
     </div>
     <button class="btn-setup" onclick="saveConfig()">Save &amp; Launch →</button>
@@ -442,7 +442,7 @@ function saveConfig() {
   const token = document.getElementById('cfg-token').value.trim();
   const owner = document.getElementById('cfg-owner').value.trim();
   const repo  = document.getElementById('cfg-repo').value.trim();
-  const path  = (document.getElementById('cfg-path').value.trim() || 'ledger-data.json');
+  const path  = (document.getElementById('cfg-path').value.trim() || 'ledger-data.txt');
   if (!token || !owner || !repo) {
     ['cfg-token','cfg-owner','cfg-repo'].forEach(id => {
       if (!document.getElementById(id).value.trim()) shakeEl(id);
@@ -461,8 +461,8 @@ function resetConfig() {
 // ════════════════════════════════════════
 // STATE
 // ════════════════════════════════════════
-const EXPENSE_CATS = ['🍔 Food & Dining','🛒 Groceries','🚗 Transport','🏠 Rent & Housing','💊 Health','🎬 Entertainment','👗 Shopping','📚 Education','💡 Utilities','📦 Other'];
-const INCOME_CATS  = ['💼 Salary','💰 Freelance','📈 Investments','🎁 Gift','🏦 Business','💵 Other Income'];
+const EXPENSE_CATS = ['Food & Dining','Groceries','Transport','Rent & Housing','Health','Entertainment','Shopping','Education','Utilities','Other'];
+const INCOME_CATS  = ['Salary','Freelance','Investments','Gift','Business','Other Income'];
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 let data = [], currentTab = 'all', dateTab = 'income';
@@ -695,7 +695,7 @@ function txnHTML(t) {
     <div class="txn-icon ${isExp?'icon-expense':'icon-income'}">${isExp?'↓':'↑'}</div>
     <div class="txn-info">
       <div class="txn-name">${escHtml(t.name)}</div>
-      <div class="txn-meta">${t.cat.split(' ').slice(1).join(' ')} · ${dStr}</div>
+      <div class="txn-meta">${escHtml(t.cat.replace(/^[^\w\s(]+\s*/u, ''))} · ${dStr}</div>
     </div>
     <div class="txn-amount ${isExp?'amount-expense':'amount-income'}">${isExp?'−':'+'}${fmt(t.amount)}</div>
     <button class="txn-del" onclick="deleteTransaction(${t.id})" title="Delete">×</button>
@@ -801,7 +801,7 @@ Promise.all([
       token: token,
       owner: 'Yugraj20',
       repo:  'Ledger',
-      path:  'ledger-data.json'
+      path:  'ledger-data.txt'
     }));
     launch();
   })

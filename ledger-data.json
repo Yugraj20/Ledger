@@ -350,5 +350,13 @@
     "type": "expense",
     "cat": "💊 Health",
     "date": "2026-05-18"
+  },
+  {
+    "id": 1779168787120,
+    "name": "Nana Nani Med",
+    "amount": 1567.2,
+    "type": "expense",
+    "cat": "💊 Health",
+    "date": "2026-05-18"
   }
 ]

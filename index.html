@@ -39,6 +39,44 @@
     --radius-lg: 24px;
   }
 
+  /* ── DARK THEME ── */
+  [data-theme="dark"] {
+    --bg:       #111210;
+    --surface:  #1a1d19;
+    --surface2: #222520;
+    --surface3: #2a2e28;
+    --border:   rgba(255,255,255,0.07);
+    --border2:  rgba(255,255,255,0.12);
+
+    --sage:    #6baa96;
+    --sage2:   #7dbfab;
+    --sage-bg: rgba(107,170,150,0.12);
+    --coral:   #e07060;
+    --coral2:  #ef8070;
+    --coral-bg:rgba(224,112,96,0.12);
+    --amber:   #d4944e;
+    --amber-bg:rgba(212,148,78,0.12);
+
+    --text:    #edeae5;
+    --text2:   #b0ada8;
+    --muted:   #6a6560;
+
+    --shadow-sm: 0 1px 4px rgba(0,0,0,0.3), 0 2px 12px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 24px rgba(0,0,0,0.4), 0 1px 4px rgba(0,0,0,0.25);
+    --shadow-lg: 0 12px 48px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.3);
+  }
+
+  /* ── THEME TOGGLE ── */
+  .btn-theme {
+    background: transparent; border: 1.5px solid var(--border2);
+    color: var(--muted); width: 38px; height: 38px; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 50%; cursor: pointer; font-size: 16px;
+    transition: all 0.22s ease; flex-shrink: 0;
+    font-family: var(--font-sans);
+  }
+  .btn-theme:hover { background: var(--surface3); color: var(--text2); transform: rotate(20deg) scale(1.1); }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
@@ -47,6 +85,7 @@
     font-family: var(--font-sans);
     min-height: 100vh;
     overflow-x: hidden;
+    transition: background 0.3s ease, color 0.3s ease;
   }
 
   /* Subtle linen texture */
@@ -502,6 +541,7 @@
       <button class="btn btn-date"    onclick="openDateModal()">📅 By Date</button>
       <button class="btn btn-pdf"     onclick="printMonthPDF()">Print</button>
       <button class="btn btn-save"    onclick="saveToCSV()">CSV</button>
+      <button class="btn-theme" id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">🌙</button>
       <button class="btn btn-settings" onclick="resetConfig()" title="Change GitHub config">⚙</button>
     </div>
   </nav>
@@ -961,6 +1001,27 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&document.getElementById('add-modal').classList.contains('open'))saveTransaction();
   if(e.key==='Escape')document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open'));
 });
+
+// ════════════════════════════════════════
+// THEME TOGGLE
+// ════════════════════════════════════════
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const next = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  document.getElementById('theme-toggle').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('ledger_theme', next);
+}
+
+// Apply saved theme on load
+(function() {
+  const saved = localStorage.getItem('ledger_theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+  });
+})();
 
 // ── Boot ── fetch token halves from abc.txt and def.txt, then launch
 Promise.all([

@@ -374,5 +374,13 @@
     "type": "expense",
     "cat": "🚗 Transport",
     "date": "2026-05-17"
+  },
+  {
+    "id": 1779169102748,
+    "name": "Garbage Bags x2",
+    "amount": 100,
+    "type": "expense",
+    "cat": "🛒 Groceries",
+    "date": "2026-05-15"
   }
 ]

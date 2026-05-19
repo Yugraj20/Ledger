@@ -382,5 +382,13 @@
     "type": "expense",
     "cat": "🛒 Groceries",
     "date": "2026-05-15"
+  },
+  {
+    "id": 1779169126900,
+    "name": "Rahul Bakers",
+    "amount": 425,
+    "type": "expense",
+    "cat": "🛒 Groceries",
+    "date": "2026-05-15"
   }
 ]

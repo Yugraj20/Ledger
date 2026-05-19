@@ -334,13 +334,5 @@
     "type": "expense",
     "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
     "date": "2026-05-05"
-  },
-  {
-    "id": 1779168691717,
-    "name": "Nana Ji Med",
-    "amount": 1956.3,
-    "type": "expense",
-    "cat": "💊 Health",
-    "date": "2026-05-13"
   }
 ]

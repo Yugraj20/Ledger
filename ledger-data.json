@@ -390,5 +390,13 @@
     "type": "expense",
     "cat": "🛒 Groceries",
     "date": "2026-05-15"
+  },
+  {
+    "id": 1779169146446,
+    "name": "Mumma Specs",
+    "amount": 800,
+    "type": "expense",
+    "cat": "💡 Utilities",
+    "date": "2026-05-15"
   }
 ]

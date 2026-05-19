@@ -342,5 +342,13 @@
     "type": "expense",
     "cat": "💊 Health",
     "date": "2026-05-17"
+  },
+  {
+    "id": 1779168761369,
+    "name": "Nana Ji Med",
+    "amount": 541.7,
+    "type": "expense",
+    "cat": "💊 Health",
+    "date": "2026-05-18"
   }
 ]

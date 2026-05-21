@@ -332,7 +332,7 @@
     "name": "Custard",
     "amount": 240,
     "type": "expense",
-    "cat": "ÃÂ°ÃÂÃÂÃÂ Groceries",
+    "cat": "ÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂ Groceries",
     "date": "2026-05-05"
   },
   {
@@ -340,7 +340,7 @@
     "name": "Nana JI Med",
     "amount": 1956.3,
     "type": "expense",
-    "cat": "💊 Health",
+    "cat": "ð Health",
     "date": "2026-05-17"
   },
   {
@@ -348,7 +348,7 @@
     "name": "Nana Ji Med",
     "amount": 541.7,
     "type": "expense",
-    "cat": "💊 Health",
+    "cat": "ð Health",
     "date": "2026-05-18"
   },
   {
@@ -356,7 +356,7 @@
     "name": "Nana Nani Med",
     "amount": 1567.2,
     "type": "expense",
-    "cat": "💊 Health",
+    "cat": "ð Health",
     "date": "2026-05-18"
   },
   {
@@ -364,7 +364,7 @@
     "name": "Cab Alipur",
     "amount": 156,
     "type": "expense",
-    "cat": "🚗 Transport",
+    "cat": "ð Transport",
     "date": "2026-05-17"
   },
   {
@@ -372,7 +372,7 @@
     "name": "Alipur Cab",
     "amount": 195,
     "type": "expense",
-    "cat": "🚗 Transport",
+    "cat": "ð Transport",
     "date": "2026-05-17"
   },
   {
@@ -380,7 +380,7 @@
     "name": "Garbage Bags x2",
     "amount": 100,
     "type": "expense",
-    "cat": "🛒 Groceries",
+    "cat": "ð Groceries",
     "date": "2026-05-15"
   },
   {
@@ -388,7 +388,7 @@
     "name": "Rahul Bakers",
     "amount": 425,
     "type": "expense",
-    "cat": "🛒 Groceries",
+    "cat": "ð Groceries",
     "date": "2026-05-15"
   },
   {
@@ -396,7 +396,15 @@
     "name": "Mumma Specs",
     "amount": 800,
     "type": "expense",
-    "cat": "💡 Utilities",
+    "cat": "ð¡ Utilities",
     "date": "2026-05-15"
+  },
+  {
+    "id": 1779357225137,
+    "name": "TV Sold",
+    "amount": 1500,
+    "type": "income",
+    "cat": "Business",
+    "date": "2026-05-21"
   }
 ]

@@ -510,5 +510,13 @@
     "type": "expense",
     "cat": "Groceries",
     "date": "2026-05-28"
+  },
+  {
+    "id": 1780195550304,
+    "name": "RO",
+    "amount": 400,
+    "type": "expense",
+    "cat": "Utilities",
+    "date": "2026-05-26"
   }
 ]

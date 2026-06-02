@@ -517,7 +517,6 @@
 </head>
 <body>
 
-<!-- SETUP SCREEN -->
 <div id="setup-screen">
   <div class="setup-card">
     <div class="setup-brand">Led<span>ger</span></div>
@@ -553,9 +552,7 @@
   </div>
 </div>
 
-<!-- MAIN APP -->
 <div class="app" id="app">
-  <!-- Print header -->
   <div class="print-header">
     <div class="brand">Led<span>ger</span></div>
     <div class="print-period" id="print-period"></div>
@@ -570,7 +567,6 @@
       </div>
     </div>
 
-    <!-- Desktop buttons -->
     <div class="nav-actions nav-actions-desktop">
       <button class="btn btn-income"  onclick="openModal('income')"><span class="btn-icon">↑</span> Income</button>
       <button class="btn btn-expense" onclick="openModal('expense')"><span class="btn-icon">↓</span> Expense</button>
@@ -580,7 +576,6 @@
       <button class="btn-theme" id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">🌙</button>
     </div>
 
-    <!-- Mobile: hamburger + dropdown -->
     <div style="position:relative; display:flex; align-items:center; gap:8px;">
       <button class="btn-theme" id="theme-toggle-mobile" onclick="toggleTheme()" title="Toggle theme">🌙</button>
       <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
@@ -597,7 +592,6 @@
     </div>
   </nav>
 
-  <!-- Summary Cards -->
   <div class="hero">
     <div class="summary-card card-balance">
       <div class="summary-label">Net Balance</div>
@@ -622,7 +616,6 @@
     </div>
   </div>
 
-  <!-- Month Section -->
   <div class="month-section">
     <div class="month-header">
       <div class="month-title" id="month-display"></div>
@@ -644,7 +637,6 @@
   <div class="print-footer" id="print-footer"></div>
 </div>
 
-<!-- ADD MODAL -->
 <div class="overlay" id="add-modal">
   <div class="modal">
     <div class="modal-header">
@@ -665,7 +657,6 @@
   </div>
 </div>
 
-<!-- DATE MODAL -->
 <div class="overlay" id="date-modal">
   <div class="modal date-modal">
     <div class="modal-header">
@@ -684,7 +675,6 @@
   </div>
 </div>
 
-<!-- SYNC FAB -->
 <button class="sync-fab" id="sync-fab" onclick="manualSync()" title="Fetch latest from GitHub">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
@@ -731,8 +721,15 @@ const EXPENSE_CATS = ['Food & Dining','Groceries','Transport','Rent & Housing','
 const INCOME_CATS  = ['Salary','Freelance','Investments','Gift','Business','Other Income'];
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
+// Fix for timezone offsets altering the current date
+function getTodayYMD() {
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0, 10);
+}
+
 let data = [], currentTab = 'all', dateTab = 'income';
-let viewDate = new Date().toISOString().slice(0,10);
+let viewDate = getTodayYMD();
 const now = new Date();
 let viewMonth = now.getMonth(), viewYear = now.getFullYear();
 let fileSha = null;
@@ -886,7 +883,7 @@ function openModal(type) {
   document.getElementById('modal-title').style.color = type === 'expense' ? 'var(--coral)' : 'var(--sage)';
   document.getElementById('txn-name').value = '';
   document.getElementById('txn-amount').value = '';
-  document.getElementById('txn-date').value = new Date().toISOString().slice(0,10);
+  document.getElementById('txn-date').value = getTodayYMD();
   document.getElementById('add-modal').classList.add('open');
   setTimeout(() => document.getElementById('txn-name').focus(), 200);
 }
@@ -894,7 +891,7 @@ function openModal(type) {
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
 function openDateModal() {
-  document.getElementById('view-date').value = new Date().toISOString().slice(0,10);
+  document.getElementById('view-date').value = getTodayYMD();
   document.getElementById('date-modal').classList.add('open');
   renderDateView();
 }
@@ -1105,25 +1102,10 @@ document.addEventListener('click', e => {
   }
 });
 
-// ── Boot ── fetch token halves from abc.txt and def.txt, then launch
-Promise.all([
-  fetch('abc.txt?t=' + Date.now()).then(r => { if (!r.ok) throw new Error('abc.txt not found'); return r.text(); }),
-  fetch('def.txt?t=' + Date.now()).then(r => { if (!r.ok) throw new Error('def.txt not found'); return r.text(); })
-])
-  .then(([half1, half2]) => {
-    const token = half1.trim() + half2.trim();
-    localStorage.setItem('ledger_github_cfg', JSON.stringify({
-      token: token,
-      owner: 'Yugraj20',
-      repo:  'Ledger',
-      path:  'ledger-data.txt'
-    }));
-    launch();
-  })
-  .catch(err => {
-    console.error(err);
-    alert('Could not load token files\n\n' + err.message + '\n\nMake sure abc.txt and def.txt are in the same folder as index.html.');
-  });
+// ── Boot ── 
+// Removed the fetch logic for abc.txt and def.txt which caused local CORS errors.
+// The app will now cleanly fall back to the built-in Setup UI if no config exists.
+document.addEventListener('DOMContentLoaded', launch);
 </script>
 </body>
 </html>

@@ -518,5 +518,13 @@
     "type": "expense",
     "cat": "Utilities",
     "date": "2026-05-26"
+  },
+  {
+    "id": 1780385475724,
+    "name": "Shivani Rent June",
+    "amount": 20000,
+    "type": "income",
+    "cat": "Other Income",
+    "date": "2026-05-30"
   }
 ]

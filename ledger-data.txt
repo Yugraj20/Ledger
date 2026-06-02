@@ -526,5 +526,13 @@
     "type": "income",
     "cat": "Other Income",
     "date": "2026-06-01"
+  },
+  {
+    "id": 1780388389926,
+    "name": "Sabzi",
+    "amount": 110,
+    "type": "expense",
+    "cat": "Groceries",
+    "date": "2026-06-02"
   }
 ]

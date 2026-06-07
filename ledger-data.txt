@@ -550,5 +550,13 @@
     "type": "expense",
     "cat": "Groceries",
     "date": "2026-05-31"
+  },
+  {
+    "id": 1780843319334,
+    "name": "Sabzi",
+    "amount": 40,
+    "type": "expense",
+    "cat": "Groceries",
+    "date": "2026-06-03"
   }
 ]

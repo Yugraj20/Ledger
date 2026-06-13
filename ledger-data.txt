@@ -630,5 +630,13 @@
     "type": "expense",
     "cat": "Education",
     "date": "2026-06-11"
+  },
+  {
+    "id": 1781373785919,
+    "name": "Gate Pait + Putty in parking Deepak",
+    "amount": 2481,
+    "type": "expense",
+    "cat": "Rent & Housing",
+    "date": "2026-06-09"
   }
 ]

@@ -606,5 +606,13 @@
     "type": "expense",
     "cat": "Transport",
     "date": "2026-06-13"
+  },
+  {
+    "id": 1781373599349,
+    "name": "Ghar kharchh by manpreet",
+    "amount": 4920,
+    "type": "expense",
+    "cat": "Other",
+    "date": "2026-05-29"
   }
 ]

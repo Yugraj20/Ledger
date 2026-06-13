@@ -614,5 +614,13 @@
     "type": "expense",
     "cat": "Other",
     "date": "2026-05-29"
+  },
+  {
+    "id": 1781373682508,
+    "name": "Cooler Repair",
+    "amount": 200,
+    "type": "expense",
+    "cat": "Utilities",
+    "date": "2026-06-08"
   }
 ]

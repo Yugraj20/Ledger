@@ -582,5 +582,13 @@
     "type": "expense",
     "cat": "Utilities",
     "date": "2026-06-02"
+  },
+  {
+    "id": 1781373300568,
+    "name": "Zomato",
+    "amount": 1050,
+    "type": "expense",
+    "cat": "Food & Dining",
+    "date": "2026-06-05"
   }
 ]

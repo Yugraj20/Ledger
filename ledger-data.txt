@@ -590,5 +590,13 @@
     "type": "expense",
     "cat": "Food & Dining",
     "date": "2026-06-05"
+  },
+  {
+    "id": 1781373368914,
+    "name": "Imarti,Rusk,Muffin",
+    "amount": 500,
+    "type": "expense",
+    "cat": "Food & Dining",
+    "date": "2026-06-07"
   }
 ]

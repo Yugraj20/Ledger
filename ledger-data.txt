@@ -670,5 +670,13 @@
     "type": "expense",
     "cat": "Groceries",
     "date": "2026-06-11"
+  },
+  {
+    "id": 1781374123806,
+    "name": "Rent Atul - Tayaji",
+    "amount": 10750,
+    "type": "income",
+    "cat": "Other Income",
+    "date": "2026-06-10"
   }
 ]

@@ -646,5 +646,13 @@
     "type": "expense",
     "cat": "Groceries",
     "date": "2026-06-10"
+  },
+  {
+    "id": 1781373846590,
+    "name": "Zepto",
+    "amount": 890,
+    "type": "expense",
+    "cat": "Groceries",
+    "date": "2026-06-10"
   }
 ]

@@ -574,5 +574,13 @@
     "type": "expense",
     "cat": "Groceries",
     "date": "2026-06-06"
+  },
+  {
+    "id": 1781373283192,
+    "name": "Urban Company Sofa Clean",
+    "amount": 1200,
+    "type": "expense",
+    "cat": "Utilities",
+    "date": "2026-06-02"
   }
 ]

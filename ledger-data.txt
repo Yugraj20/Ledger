@@ -638,5 +638,13 @@
     "type": "expense",
     "cat": "Rent & Housing",
     "date": "2026-06-09"
+  },
+  {
+    "id": 1781373822993,
+    "name": "BB Now",
+    "amount": 160.75,
+    "type": "expense",
+    "cat": "Groceries",
+    "date": "2026-06-10"
   }
 ]

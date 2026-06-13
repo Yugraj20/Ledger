@@ -622,5 +622,13 @@
     "type": "expense",
     "cat": "Utilities",
     "date": "2026-06-08"
+  },
+  {
+    "id": 1781373729068,
+    "name": "Yuggi food + travel on exam days",
+    "amount": 1500,
+    "type": "expense",
+    "cat": "Education",
+    "date": "2026-06-11"
   }
 ]

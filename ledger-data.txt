@@ -694,5 +694,13 @@
     "type": "expense",
     "cat": "Rent & Housing",
     "date": "2026-06-16"
+  },
+  {
+    "id": 1781686997468,
+    "name": "Tubelight",
+    "amount": 350,
+    "type": "expense",
+    "cat": "Other",
+    "date": "2026-06-15"
   }
 ]

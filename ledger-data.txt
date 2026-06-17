@@ -686,5 +686,13 @@
     "type": "expense",
     "cat": "Rent & Housing",
     "date": "2026-06-15"
+  },
+  {
+    "id": 1781686906613,
+    "name": "Shabnam",
+    "amount": 2000,
+    "type": "expense",
+    "cat": "Rent & Housing",
+    "date": "2026-06-16"
   }
 ]

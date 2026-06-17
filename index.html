@@ -842,15 +842,52 @@ function manualSync() {
 }
 
 // ════════════════════════════════════════
+// SPLIT TOKEN  (abc.txt + def.txt → full token)
+// ════════════════════════════════════════
+// The GitHub token is kept split across two sibling files so neither half
+// alone is a usable credential. Both are fetched and concatenated at boot.
+// NOTE: this requires index.html to be served over http(s) — a local
+// double-clicked file:// page cannot fetch sibling files (browser CORS
+// rule), so run e.g. `python -m http.server` in this folder, or host it
+// on GitHub Pages alongside abc.txt/def.txt.
+async function loadSplitToken() {
+  try {
+    const [r1, r2] = await Promise.all([
+      fetch('abc.txt', { cache: 'no-store' }),
+      fetch('def.txt', { cache: 'no-store' })
+    ]);
+    if (!r1.ok || !r2.ok) return null;
+    const [part1, part2] = await Promise.all([r1.text(), r2.text()]);
+    const token = part1.trim() + part2.trim();
+    return token || null;
+  } catch (e) {
+    console.warn('Could not auto-load token from abc.txt/def.txt (likely opened via file:// — serve over http instead):', e);
+    return null;
+  }
+}
+
+// ════════════════════════════════════════
 // LAUNCH
 // ════════════════════════════════════════
-function launch() {
+async function launch() {
   cfg = loadConfig();
-  if (!cfg) {
+  const splitToken = await loadSplitToken();
+  if (splitToken) {
+    cfg = cfg ? { ...cfg, token: splitToken } : null;
+  }
+
+  if (!cfg || !cfg.owner || !cfg.repo) {
+    // Pre-fill the token field if we already have it from the files —
+    // user then only needs to supply owner/repo (first run only).
+    if (splitToken) {
+      const tokenInput = document.getElementById('cfg-token');
+      if (tokenInput) tokenInput.value = splitToken;
+    }
     document.getElementById('setup-screen').style.display = 'flex';
     document.getElementById('app').style.display = 'none';
     return;
   }
+
   document.getElementById('setup-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   document.getElementById('sync-fab').style.display = 'inline-flex';
@@ -1102,9 +1139,11 @@ document.addEventListener('click', e => {
   }
 });
 
-// ── Boot ── 
-// Removed the fetch logic for abc.txt and def.txt which caused local CORS errors.
-// The app will now cleanly fall back to the built-in Setup UI if no config exists.
+// ── Boot ──
+// launch() fetches abc.txt + def.txt and combines them into the GitHub
+// token (see loadSplitToken above). If those files aren't reachable —
+// e.g. the page was opened directly as a file:// URL — it falls back
+// to whatever token/owner/repo is already saved, or the Setup UI.
 document.addEventListener('DOMContentLoaded', launch);
 </script>
 </body>

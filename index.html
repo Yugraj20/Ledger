@@ -842,6 +842,13 @@ function manualSync() {
 }
 
 // ════════════════════════════════════════
+// AUTO-LOGIN DEFAULTS
+// ════════════════════════════════════════
+const DEFAULT_OWNER = 'Yugraj20';
+const DEFAULT_REPO  = 'Ledger';
+const DEFAULT_PATH  = 'ledger-data.txt';
+
+// ════════════════════════════════════════
 // SPLIT TOKEN  (abc.txt + def.txt → full token)
 // ════════════════════════════════════════
 // The GitHub token is kept split across two sibling files so neither half
@@ -872,17 +879,30 @@ async function loadSplitToken() {
 async function launch() {
   cfg = loadConfig();
   const splitToken = await loadSplitToken();
+
   if (splitToken) {
-    cfg = cfg ? { ...cfg, token: splitToken } : null;
+    // Auto-login: build the full config from the fetched token + the
+    // hardcoded GitHub details (or whatever was saved before, if different).
+    cfg = {
+      token: splitToken,
+      owner: (cfg && cfg.owner) || DEFAULT_OWNER,
+      repo:  (cfg && cfg.repo)  || DEFAULT_REPO,
+      path:  (cfg && cfg.path)  || DEFAULT_PATH
+    };
+    localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
   }
 
   if (!cfg || !cfg.owner || !cfg.repo) {
-    // Pre-fill the token field if we already have it from the files —
-    // user then only needs to supply owner/repo (first run only).
-    if (splitToken) {
-      const tokenInput = document.getElementById('cfg-token');
-      if (tokenInput) tokenInput.value = splitToken;
-    }
+    // Fallback: abc.txt/def.txt weren't reachable (e.g. opened via file://).
+    // Pre-fill what we already know so manual setup needs minimal input.
+    const tokenInput = document.getElementById('cfg-token');
+    const ownerInput = document.getElementById('cfg-owner');
+    const repoInput  = document.getElementById('cfg-repo');
+    const pathInput  = document.getElementById('cfg-path');
+    if (splitToken && tokenInput) tokenInput.value = splitToken;
+    if (ownerInput && !ownerInput.value) ownerInput.value = DEFAULT_OWNER;
+    if (repoInput  && !repoInput.value)  repoInput.value  = DEFAULT_REPO;
+    if (pathInput  && !pathInput.value)  pathInput.value  = DEFAULT_PATH;
     document.getElementById('setup-screen').style.display = 'flex';
     document.getElementById('app').style.display = 'none';
     return;
@@ -894,6 +914,7 @@ async function launch() {
   renderAll();
   fetchFromGitHub().then(() => startAutoFetch());
 }
+
 
 // ════════════════════════════════════════
 // SYNC STATUS

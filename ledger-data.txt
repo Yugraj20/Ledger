@@ -702,5 +702,13 @@
     "type": "expense",
     "cat": "Other",
     "date": "2026-06-15"
+  },
+  {
+    "id": 1781687058104,
+    "name": "Deepak + Babban Parking",
+    "amount": 737.5,
+    "type": "income",
+    "cat": "Other Income",
+    "date": "2026-06-14"
   }
 ]
